@@ -19,6 +19,7 @@ namespace Project_2_EMS {
         private readonly SharedSqlHandler sharedSqlHandler = new SharedSqlHandler();
         private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
 
+        // Test Comment Change
         private List<PatientAppointment> appointments = new List<PatientAppointment>();
         private List<Patient> patients = new List<Patient>();
 

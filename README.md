@@ -19,4 +19,4 @@ Reception Login:
 
 Username: r
 
-Password: s
+Password: p

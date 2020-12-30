@@ -14,82 +14,122 @@ using System.Windows.Media;
 
 namespace Project_2_EMS {
     public partial class ReceptionistView {
+        // Create parent window to hold the MainWindow so that we can show it later
         private readonly Window _parentWindow;
+
+        // Create a new appt window to hold the NewAppointmentWindow so that we can close it in
+        // certain edge cases
         private Window newApptWindow;
+
+        // Create global database sql handler and connection manager
         private readonly SharedSqlHandler sharedSqlHandler = new SharedSqlHandler();
         private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
 
-        // Test Comment Change
+        // Create lists to hold appointments and patients for global use
         private List<PatientAppointment> appointments = new List<PatientAppointment>();
         private List<Patient> patients = new List<Patient>();
 
+        // Create global variables to hold the current week date and the previous week date
+        // These are used when interacting with the calendar
         private DateTime weekDate;
         private DateTime prevWeekDate;
 
         public ReceptionistView(Window parentWindow, String staffMember) {
             InitializeComponent();
+
+            // Initialize the labels at the top of the calendar and sign-in views
             InitializeHeadLabels();
+
+            // Update the each of the views (information will change based on the date)
             UpdateReceptionistView();
 
+            // Set the greeting based on who is signing in
             GreetingGrid.Content = "Greetings " + staffMember + "!";
 
+            // Assign parent window and ready the onwindowclosing for when receptionistview is closed
             _parentWindow = parentWindow;
             Closing += OnWindowClosing;
         }
 
-        private void InitializeHeadLabels()
-        {
+        private void InitializeHeadLabels() {
+            // Set the current weekdate based on the current date
             weekDate = DateTime.Now.AddDays(Convert.ToDouble(DateTime.Now.DayOfWeek.ToString("d")) * -1.0);
+            
+            // Set the selected date on the calendar to current date
             ApptCalendar.SelectedDate = DateTime.Now.Date;
+
+            // Set the calendar view top label to show the week date in the given format
             AppointmentWeek.Content = weekDate.ToString("Week o\\f MMMM dd, yyyy");
+
+            // Set the sign-in view top label to only show today's date
             SignInDate.Content = DateTime.Now.Date.ToLongDateString();
         }
 
-        public void UpdateReceptionistView()
-        {
+        public void UpdateReceptionistView() {
+            // Clear the appointment grid to prepare for new information
             ClearAppointmentGrid();
+
+            // Populate the appointment grid with appointments for this week
             PopulateAppointmentGrid(patients, appointments);
+
+            // Populate the sign-in view with patients who have an appointment today
             PopulateSignInView();
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e) {
+            // Close the new appt window if it exists
+            if (newApptWindow != null) {
+                newApptWindow.Close();
+            }
+
+            // Show the parent window after hiding the receptionist view window
             Hide();
-
-            if (newApptWindow != null) newApptWindow.Close();
-
             var mainWindow = _parentWindow;
             mainWindow.Show();
         }
 
         private void OnWindowClosing(object sender, CancelEventArgs e) {
+            // Close the new appt window if it exists
+            if (newApptWindow != null) {
+                newApptWindow.Close();
+            }
+
+            // Close the parent window when the receptionist view window is closed
             var mainWindow = _parentWindow;
-
-            if (newApptWindow != null) newApptWindow.Close();
-
             mainWindow.Close();
         }
 
-        // Change which view is visible when you select buttons from the control panel
         private void ControlButton_Click(object sender, RoutedEventArgs e) {
+            // Cast the trigger source as a button
             Button btn = e.Source as Button;
+            /** 
+             *  I set the button names to be the same as the view names so that I could compare
+             *  the names. If the button name equals the view name, then we make that view visible,
+             *  else, we make the view invisible
+             */ 
             foreach (Grid grid in ViewPanel.Children) {
                 _ = grid.Name.Contains(btn.Name) ? grid.Visibility = Visibility.Visible : grid.Visibility = Visibility.Hidden;
             }
+
+            // Hide the appointment button from the side panel and clear patient billing information
             ApptButtonGrid.Visibility = Visibility.Hidden;
             ClearPatientBilling();
         }
 
-        // Change the displayed date when you select a date on the calendar gui, highlight the day on the appointments calendar
         private void ApptCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) {
             if (ApptCalendar.SelectedDate.HasValue) {
+                // Grab the date and the day number from the calendar
                 var date = ApptCalendar.SelectedDate.Value;
                 var dayNum = Convert.ToDouble(ApptCalendar.SelectedDate.Value.DayOfWeek.ToString("d"));
 
+                // Set the weekdate and calendar view top label
                 weekDate = date.AddDays(dayNum * -1.0);
                 AppointmentWeek.Content = weekDate.ToString("Week o\\f MMMM dd, yyyy");
 
+                // Highlight the day label on the calendar view to match the currently selected day
                 HighlightCalendarDay(AppointmentDays, 0, (int)dayNum + 1);
 
+                // If the weekdate changes, update the receptionist view information
                 if (prevWeekDate != weekDate) {
                     prevWeekDate = weekDate;
                     UpdateReceptionistView();
@@ -110,16 +150,23 @@ namespace Project_2_EMS {
         }
 
         private void GetPatientAppointments() {
-          string query = sharedSqlHandler.AppointmentQuerier("DateRange");
-          using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+            // Choose our query statement based on date range
+            string query = sharedSqlHandler.AppointmentQuerier("DateRange");
+
+            // Setup the sql connection and commands and attempt to read from the database
+            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+                // Use parameterized queries to query the database
                 SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
                 cmd.Parameters.Add("@ApptStartDate", SqlDbType.DateTime).Value = weekDate;
                 cmd.Parameters.Add("@ApptEndDate", SqlDbType.DateTime).Value = weekDate.AddDays(6);
            
                 try {
+                    // Use sql data reader to read from the database
                     connection.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
+                    // Continue to loop through each part read by the data reader, grab the data,
+                    // create a new appointment object, and add it to our appointments list
                     while (dataReader.Read()) {
                         int visitId = dataReader.GetInt32(0);
                         int patientId = dataReader.GetInt32(1);
@@ -136,20 +183,27 @@ namespace Project_2_EMS {
                 }
                 catch (Exception) {
                     MessageBox.Show("Error reading from database.");
-                } 
-          }
+                }
+            }
         }
 
         private void GetPatientById(int patId) {
-          string query = sharedSqlHandler.PatientIdQuerier();
-          using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+            // Choose our query statement based on patient Id
+            string query = sharedSqlHandler.PatientIdQuerier();
+
+            // Setup the sql connection and commands and attempt to read from the database
+            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+                // Use parameterized queries to query the database
                 SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
                 cmd.Parameters.Add("@PatientId", SqlDbType.Int).Value = patId;
 
                 try {
+                    // Use sql data reader to read from the database
                     connection.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
+                    // Continue to loop through each part read by the data reader, grab the data,
+                    // create a new patient object, and add it to our patients list
                     while (dataReader.Read()) {
                         int patientId = dataReader.GetInt32(0);
                         string lastName = dataReader.GetString(1);
@@ -164,27 +218,34 @@ namespace Project_2_EMS {
                 catch (Exception) {
                     MessageBox.Show("Error reading from database.");
                 }
-          }
+            }
         }
 
         private Patient GetPatientByName() {
             Patient patient = null;
 
+            // Grab the first and last name from the billing text boxes
             string findFirstName = BillingFirstNameTb.Text;
             string findLastName = BillingLastNameTb.Text;
 
+            // Choose our query statement based on patient name
             ReceptionSqlHandler rcsql = new ReceptionSqlHandler();
             string query = rcsql.PatientNameExactQuerier();
 
+            // Setup the sql connection and commands and attempt to read from the database
             using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+                // Use parameterized queries to query the database
                 SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
                 cmd.Parameters.Add("@firstName", SqlDbType.Text).Value = findFirstName.Trim(' ');
                 cmd.Parameters.Add("@lastName", SqlDbType.Text).Value = findLastName.Trim(' ');
 
                 try {
+                    // Use sql data reader to read from the database
                     connection.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
+                    // Continue to loop through each part read by the data reader, grab the data,
+                    // and create a new patient object
                     while (dataReader.Read()) {
                         int patientId = dataReader.GetInt32(0);
                         string lastName = dataReader.GetString(1);
@@ -206,19 +267,26 @@ namespace Project_2_EMS {
 
         private void PopulateSignInView() {
             ClearSigninView();
+
+            // Use a row index counter to drop to the next row after each addition to the sign-in view
             int rowIndex = 0;
             foreach (PatientAppointment pa in appointments) {
+                // Check if the current appointment is today
                 if (pa.ApptDate == DateTime.Now.Date) {
                     foreach (Patient p in patients) {
+                        // Check for each patient who's appointment is today by matching their Id's
                         if (pa.PatientId == p.PatientId) {
+                            // Grab each label with at the current row index from the sign-in view
                             Label visitId = GetChild(SignInVisitId, rowIndex, 0) as Label;
                             Label lastName = GetChild(SignInLastName, rowIndex, 0) as Label;
                             Label firstName = GetChild(SignInFirstName, rowIndex, 0) as Label;
 
+                            // Set the sign-in information
                             visitId.Content = "[ " + pa.VisitId + " ]";
                             lastName.Content = p.LastName;
                             firstName.Content = p.FirstName;
 
+                            // Increment the row index to be the next line in the sign-in view
                             rowIndex += 1;
                             break;
                         }
@@ -228,63 +296,78 @@ namespace Project_2_EMS {
         }
 
         private void UpdateDbPatientBalance(int patientId, decimal cost) {
+            // Choose our query statement to update the patient balance
             ReceptionSqlHandler rcsql = new ReceptionSqlHandler();
             string query = rcsql.UpdatePatientBalance();
-            
+
+            // Setup the sql connection and commands and attempt to read from the database
             using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
+                // Use parameterized queries to query the database
                 SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
                 cmd.Parameters.Add("@cost", SqlDbType.Decimal).Value = cost;
                 cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
 
-                try
-                {
+                try {
+                    // Execute the command as a nonquery
                     connection.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     MessageBox.Show("Error when attempting to update patient balance.");
                 }
             }
         }
 
-        private void ClearSigninView()
-        {
+        private void ClearSigninView() {
+            // Loop through each child grid in the sing-in view and set their content to empty
             foreach (Label label in SignInVisitId.Children) { label.Content = String.Empty; }
             foreach (Label label in SignInLastName.Children) { label.Content = String.Empty; }
             foreach (Label label in SignInFirstName.Children) { label.Content = String.Empty; }
         }
 
-        // Populate the appointment grids with appropriate appointments
         private void PopulateAppointmentGrid(List<Patient> patients, List<PatientAppointment> appointments) {
+            // Get all of the appointments for the current week
+            // This populates the appointments list
             GetPatientAppointments();
 
+            // Get all of the patients who have an appointment this week by their Id's
+            // This populates the patients list
             foreach (PatientAppointment pa in appointments) {
                 GetPatientById(pa.PatientId);
             }
 
             foreach (PatientAppointment appt in appointments) {
+                // Initialize appt time and set a day variable to be the digit number of the day
+                // (sunday = 0, monday = 1, etc...)
                 string apptTime = String.Empty;
                 double day = Convert.ToDouble(appt.ApptDate.DayOfWeek.ToString("d"));
 
+                // Compare the current appointment time to a timespan time of 12:00:00 (PM)
                 int diff = TimeSpan.Compare(appt.ApptTime, new TimeSpan(12,0,0));
 
+                // Set the apptTime to a 12 hour system and set it as either AM or PM depending on the diff
                 _ = diff > 0 ? apptTime = string.Format("{0:h\\:mm} PM", appt.ApptTime.Subtract(TimeSpan.FromHours(12))) : null;
                 _ = diff == 0 ? apptTime = string.Format("{0:h\\:mm} PM", appt.ApptTime) : null;
                 _ = diff < 0 ? apptTime = string.Format("{0:h\\:mm} AM", appt.ApptTime) : null;
 
 
                 foreach (Label child in AppointmentTimes.Children) {
+                    // If the appTime equals the AppointmentTimes child grid content, then we modify the corresponding 
+                    // calendar grid child with the appointment and patient information
                     if (apptTime.CompareTo(child.Content.ToString()) == 0) {
+                        // Grab the calendar grid child that matches the same row as the AppointmentTimes grid and colum
+                        // that matches the day
                         Label apptLabel = GetChild(AppointmentGrids, Grid.GetRow(child), (int)day - 1) as Label;
 
                         // Grab the current appt index to be able to get the patient at the same index
                         int index = appointments.IndexOf(appt);
 
+                        // Grab the patient first name and last name and appointment visit id
                         string firstName = patients.ElementAt(index).FirstName;
                         string lastInitial = patients.ElementAt(index).LastName;
                         string visitId = appt.VisitId.ToString();
 
+                        // Set the calendar grid child content with the information from above and set the backgroudn to dark green
                         apptLabel.Content = String.Format("{0} {1}.\nVisit Id: {2}", firstName, lastInitial.Substring(0,1), visitId);
                         apptLabel.Background = Brushes.DarkGreen;
                     }
@@ -376,8 +459,7 @@ namespace Project_2_EMS {
             Thickness thc = new Thickness(2);
 
             // Find the child corresponding to the selected cell on the appointments calendar
-            foreach (Label child in AppointmentGrids.Children)
-            {
+            foreach (Label child in AppointmentGrids.Children) {
                 _ = child.Margin.Equals(thc) ? srcLabel = child : null;
             }
 

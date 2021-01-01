@@ -375,11 +375,12 @@ namespace Project_2_EMS {
             }
         }
 
-        // Clear the appointment grids (Used when changing week view)
         private void ClearAppointmentGrid() {
+            // Clear patient and appointments lists to prepare for new patients and appointments
             appointments.Clear();
             patients.Clear();
 
+            // Return each calendar grid cell to its original color
             foreach (Label child in AppointmentGrids.Children) {
                 var bc = new BrushConverter();
                 child.Background = (Brush)bc.ConvertFrom("#FF30373E");
@@ -387,9 +388,9 @@ namespace Project_2_EMS {
             }
         }
 
-        // Get individual child from UIElement
         private static UIElement GetChild(Grid grid, int row, int column) {
             foreach (UIElement child in grid.Children) {
+                // Return the child element at the supplied row and column
                 if (Grid.GetRow(child) == row && Grid.GetColumn(child) == column) {
                     return child;
                 }
@@ -397,10 +398,13 @@ namespace Project_2_EMS {
             return null;
         }
 
-        // Highlight the selected day on the appointments calendar
         private static void HighlightCalendarDay(Grid grid, int row, int column) {
             foreach (Label label in grid.Children) {
+                // Check that row and column match the row and column of the selected label
                 Boolean labelMatch = Grid.GetRow(label) == row && Grid.GetColumn(label) == column;
+
+                // If it matches, then change the background to #FF4669B0
+                // else, return the background to it's default value
                 if (labelMatch) {
                     var bc = new BrushConverter();
                     label.Background = (Brush)bc.ConvertFrom("#FF4669B0");
@@ -412,15 +416,16 @@ namespace Project_2_EMS {
             }
         }
 
-        // Highlight the selected cell on the appointments calendar     
         private static void HighlightCalendarCell(Grid grid, int row, int column) {
             foreach (Label child in grid.Children) {
+                // Check if the row and column match the row and column of the child element
                 Boolean childMatch = Grid.GetRow(child) == row && Grid.GetColumn(child) == column;
+
+                // If it matches, change the margin values, else return them to their original values
                 _ = childMatch ? child.Margin = new Thickness(2) : child.Margin = new Thickness(0.5);
             }
         }
 
-        // Called when a cell on the appointments calendar is selected
         private void ApptDate_MouseDown(object sender, MouseButtonEventArgs e) {
             Label srcLabel = e.Source as Label;
 
@@ -438,50 +443,64 @@ namespace Project_2_EMS {
             _ = srcLabelEmpty ? ViewApptButton.Content = "New Appointment" : ViewApptButton.Content = "View Appointment";
         }
 
-        // Called when a cell on the appointments calendar has been double clicked
         private void ApptDate_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            // Close any new appt windows that are currently active
             if (newApptWindow != null) {
                 newApptWindow.Close();
             }
 
             Label srcLabel = e.Source as Label;
 
+            // Open a new appt window
             OpenAppointmentView(srcLabel);
         }
 
-        // Button with similar functionality to double clicking a cell on the appointments calendar
         private void ViewApptButton_Click(object sender, RoutedEventArgs e) {
+            // Close any new appt windows that are currently active
             if (newApptWindow != null) {
                 newApptWindow.Close();
             }
 
             Label srcLabel = null;
+
+            // Create a Thickness object to compare later
             Thickness thc = new Thickness(2);
 
             // Find the child corresponding to the selected cell on the appointments calendar
             foreach (Label child in AppointmentGrids.Children) {
+                // If the marin is 2, then we have found the selected label
                 _ = child.Margin.Equals(thc) ? srcLabel = child : null;
             }
 
+            // Open the new appt window
             OpenAppointmentView(srcLabel);
         }
 
-        // Open a separate window when viewing/adding appointments
         private void OpenAppointmentView(Label srcLabel) {
+            // Get the Label with the row matching the row of the srcLabel
             Label timeLabel = GetChild(AppointmentTimes, Grid.GetRow(srcLabel), 0) as Label;
+
+            // Get the data from the weekDate by adding the column number to the days of that week
             DateTime date = weekDate.AddDays(Grid.GetColumn(srcLabel) + 1);
 
+            // If the srcLabel content is not empty, we want to open the appt window with the current appointment's information
+            // else, we want to open a new appt window for adding new appointments
             if (srcLabel.Content.ToString() != String.Empty) {
+                // Initialize a patientIndex so that we can find the patient who's appointment has been selected
                 int patientIndex = 0;
+
+                // Get the visitId from the srcLabel content
                 int visitId = Convert.ToInt32(string.Join("", srcLabel.Content.ToString().ToCharArray().Where(Char.IsDigit)));
 
                 foreach (PatientAppointment pa in appointments) {
+                    // Grab the index of the patient who's visitId matches the visitId in the appointments list
                     if (pa.VisitId == visitId) {
                         patientIndex = appointments.IndexOf(pa);
                         break;
                     }
                 }
 
+                // Grab both the patient and their appointment
                 Patient patient = patients.ElementAt(patientIndex);
                 PatientAppointment appointment = appointments.ElementAt(patientIndex);
 
@@ -489,13 +508,26 @@ namespace Project_2_EMS {
                 string lastName = patient.LastName;
                 string notes = appointment.ReceptNote;
 
+                /**
+                 *  Create a variable to hold this ReceptionistView window to send to the new appt window.
+                 *  We want to be able to call the UpdateReceptionistView method from this window when closing the new appt window.
+                 */
                 ReceptionistView recView = this;
+
+                // Open the new appt window with the patient's information
                 newApptWindow = new NewAppointmentWindow(recView, visitId, firstName, lastName, notes, timeLabel, date);
                 newApptWindow.Show();
             }
-            else {   
+            else {
+                // Only do this if the selected date is not today or in the past
                 if (DateTime.Compare(date.Date, DateTime.Now.Date) >= 0) {
+                    /**
+                    *  Create a variable to hold this ReceptionistView window to send to the new appt window.
+                    *  We want to be able to call the UpdateReceptionistView method from this window when closing the new appt window.
+                    */
                     ReceptionistView recView = this;
+
+                    // Open the new appt window
                     newApptWindow = new NewAppointmentWindow(recView, timeLabel, date);
                     newApptWindow.Show();
                 }
@@ -503,18 +535,24 @@ namespace Project_2_EMS {
         }
 
         private void SearchPatientBtn_Click(object sender, RoutedEventArgs e) {
+            // Update's the billing labels
             UpdateBillingInformation();
         }
 
         private void UpdateBillingInformation() {
+            // Grab the patient with the supplied name
             Patient patient = GetPatientByName();
 
+            // If the patient exists, populate their billing information
+            // else, clear the billing information
             if (patient != null) {
+                // Set the patients first, last name and id labels
                 BillingPatient.Content = patient.FirstName + " " + patient.LastName;
                 BillingPatientId.Content = patient.PatientId;
 
                 string balance = string.Format("${0:N2}", patient.Balance);
 
+                // Set the patients balance labels
                 BillingPatientBalance.Content = balance;
                 BillingOwedAmount.Content = balance;
             }
@@ -528,6 +566,7 @@ namespace Project_2_EMS {
         }
 
         private void ClearPatientBilling() {
+            // Set each billing information to the empty string
             BillingFirstNameTb.Text = String.Empty;
             BillingLastNameTb.Text = String.Empty;
             BillingPatient.Content = String.Empty;
@@ -539,10 +578,13 @@ namespace Project_2_EMS {
         }
 
         private void PayPatientBillingBtn_Click(object sender, RoutedEventArgs e) {
+            // Only do this if a valid patient has been selected
             if (BillingPatientId.Content.ToString() != String.Empty) {
+                // Grab the amount owed by the patient
                 decimal oweAmount = Convert.ToDecimal(BillingOwedAmount.Content.ToString().Substring(1));
 
                 if (oweAmount > 0) {
+                    // Send the amount owed to the verification step
                     PaymentVerificationHandling(oweAmount);
                 }
             }
@@ -550,14 +592,22 @@ namespace Project_2_EMS {
 
         private void PaymentVerificationHandling(decimal oweAmount) {
             if (IsValidPayment()) {
+                // Grab the amount the patient wishes to pay to two decimal places ({0:N2})
                 string stringPayAmount = string.Format("{0:N2}", Convert.ToDecimal(BillingPayAmount.Text)).Trim(' ');
+                
+                // Convert the amount to be paid into a decimal value
                 decimal payAmount = Convert.ToDecimal(stringPayAmount);
 
                 decimal amountPaid = 0;
+
+                // If the amount paid is less than the owed amount, then set amountPaid equal to payAmount
+                // else, set amountPaid equal to payAmount minus oweAmount. (So that the patient can't overpay)
                 _ = oweAmount > payAmount ? (amountPaid = payAmount, null) : (amountPaid = oweAmount, BillingChange.Content = "$" + (payAmount - oweAmount).ToString());
 
+                // Grab the patient Id from the billing information
                 int patientId = Convert.ToInt32(new String(BillingPatientId.Content.ToString().Where(Char.IsDigit).ToArray()).Trim(' '));
 
+                // Go to payment confirmation and update the billing information
                 ConfirmPayment(patientId, amountPaid);
                 UpdateBillingInformation();
             }
@@ -568,18 +618,24 @@ namespace Project_2_EMS {
 
         private Boolean IsValidPayment() {
             bool isValid = true;
-
+            /** 
+             *  Payment is only valid if the text contains only digits and decimals
+             *  (I realize more needs to be done to ensure a valid input but I needed to spend
+             *  more time on the rest of the project)
+             */
             _ = !Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$") ? isValid = false : true;
 
             return isValid;
         }
 
         private void ConfirmPayment(int patientId, Decimal amountPaid) {
+            // Set the payment confirmation dialog box
             string confirmation = "Confirm payment amount of " + amountPaid.ToString() + "?";
             MessageBoxResult result = MessageBox.Show(confirmation, "Payment Confirmation", MessageBoxButton.YesNo);
 
             switch (result) {
                 case MessageBoxResult.Yes:
+                    // Set the pay amount text to empty and update the patients balance in the database
                     BillingPayAmount.Text = String.Empty;
                     UpdateDbPatientBalance(patientId, Decimal.Negate(amountPaid));
                     break;
@@ -591,17 +647,17 @@ namespace Project_2_EMS {
         private void NextPrevWeekBtn_Click(object sender, RoutedEventArgs e) {
             Button btn = e.Source as Button;
 
+            // Get the date selected on the appt calendar
             DateTime date = (DateTime)ApptCalendar.SelectedDate;
-            DateTime nextWeek = date.AddDays(7);
-            DateTime prevWeek = date.AddDays(-7);
 
+            // Proceed to the next week or previous week based on the button pressed
             if (btn.Content.ToString() == "Next") {
-                ApptCalendar.SelectedDate = nextWeek;
-                ApptCalendar.DisplayDate = nextWeek;
+                ApptCalendar.SelectedDate = date.AddDays(7);
+                ApptCalendar.DisplayDate = date.AddDays(7);
             }
             else {
-                ApptCalendar.SelectedDate = prevWeek;
-                ApptCalendar.DisplayDate = prevWeek;
+                ApptCalendar.SelectedDate = date.AddDays(-7);
+                ApptCalendar.DisplayDate = date.AddDays(-7);
             }
         }
     }

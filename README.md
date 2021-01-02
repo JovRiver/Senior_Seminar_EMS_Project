@@ -1,8 +1,9 @@
 # Software_Engineering_EMS_Project
 
 Our project for Software Engineering. In this project, we worked in a group to create a simplistic representation of an electronic medical service.
-This application contains a login screen and four views.
+We used Visual Studio 2019 for this project. 
 
+This application contains a login screen and four views.
 
  - Patient View: The patient portal where a patient can view their information.
 

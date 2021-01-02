@@ -17,6 +17,6 @@ I personally worked on the receptionist view.
 
 Reception Login:
 
-Username: r
+ - Username: r
 
-Password: p
+ - Password: p

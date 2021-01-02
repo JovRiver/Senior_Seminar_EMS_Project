@@ -1,6 +1,6 @@
-# Senior_Seminar_EMS_Project
+# Software_Engineering_EMS_Project
 
-Our project for senior seminar. In this project, we worked in a group to create a simplistic representation of an electronic medical service.
+Our project for Software Engineering. In this project, we worked in a group to create a simplistic representation of an electronic medical service.
 This application contains a login screen and four views.
 
 

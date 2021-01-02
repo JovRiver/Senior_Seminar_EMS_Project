@@ -51,7 +51,7 @@
 
         <Grid Name="ViewPanel" Grid.Column="1" Background="#FF26282C">
             <!-- This is the greeting grid -->
-            <Grid Background="#FF26282C" Visibility="Hidden">
+            <Grid Background="#FF26282C" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
@@ -81,7 +81,7 @@
             </Grid>
             
             <!-- This is the calendar panel -->
-            <Grid Name="CalendarPanel" Grid.Column="1" Visibility="Visible" >
+            <Grid Name="CalendarPanel" Grid.Column="1" Visibility="Hidden" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="65" />
                     <RowDefinition Height="auto" />

@@ -32,9 +32,10 @@ namespace Project_2_EMS {
     }
 
       private void OnWindowClosing(object sender, CancelEventArgs e) {
-          var mainWindow = _parentWindow;
-          mainWindow.Close();
-      }
+            if (!_parentWindow.IsActive) {
+                _parentWindow.Close();
+            }
+        }
       
       private Boolean IsPatientSelected() {
         Boolean isValid = true;

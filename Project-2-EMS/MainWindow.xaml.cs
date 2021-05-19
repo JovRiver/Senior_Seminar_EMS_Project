@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Security;
@@ -11,34 +12,64 @@ namespace Project_2_EMS {
   ///   Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow {
+
+    private Window liveWindow;
+
     public MainWindow() {
       InitializeComponent();
+
+      Closing += OnWindowClosing;
+    }
+
+    private void OnWindowClosing(object sender, CancelEventArgs e) {
+      if (liveWindow != null && !liveWindow.IsActive) {
+          liveWindow.Close();
+      }
     }
 
     private void MoveToNurseView() {
+      if (liveWindow != null) {
+        liveWindow.Close();
+      }
+
       Window nurseWindow = new NurseView(this);
+      liveWindow = nurseWindow;
       nurseWindow.Show();
       Hide();
     }
 
     private void MoveToReceptionView(StaffMember staffMember) {
+      if (liveWindow != null) {
+        liveWindow.Close();
+      }
+
       Window receptionWindow = new ReceptionistView(this, staffMember.FirstName);
+      liveWindow = receptionWindow;
       receptionWindow.Show();
       Hide();
     }
 
     private void MoveToPatientView(Patient patient) {
+      if (liveWindow != null) {
+        liveWindow.Close();
+      }
+
       Window patientWindow = new PatientView(this, patient);
+      liveWindow = patientWindow;
       patientWindow.Show();
       Hide();
     }
 
-    private void MoveToDoctorView()
-        {
-            Window doctorWindow = new DoctorView(this);
-            doctorWindow.Show();
-            Hide();
-        }
+    private void MoveToDoctorView() {
+      if (liveWindow != null) {
+        liveWindow.Close();
+      }
+
+      Window doctorWindow = new DoctorView(this);
+      liveWindow = doctorWindow;
+      doctorWindow.Show();
+      Hide();
+    }
 
     private void StaffLoginButton_Click(object sender, RoutedEventArgs e) {
       String username = Staff_TbUsername.Text;
@@ -199,7 +230,6 @@ namespace Project_2_EMS {
         connection.Close();
         return login;
       }
-      
     }
   }
 }

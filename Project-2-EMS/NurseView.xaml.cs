@@ -29,8 +29,9 @@ namespace Project_2_EMS {
     }
 
     private void OnWindowClosing(object sender, CancelEventArgs e) {
-      Window mainWindow = _parentWindow;
-      mainWindow.Close();
+        if (!_parentWindow.IsActive) {
+           _parentWindow.Close();
+        }
     }
     
     private void Today_PatientSearch_TB_OnTextChanged(object sender, TextChangedEventArgs e) {

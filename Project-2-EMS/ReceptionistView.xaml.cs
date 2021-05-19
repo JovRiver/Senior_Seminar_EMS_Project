@@ -48,7 +48,7 @@ namespace Project_2_EMS {
 
             // Assign parent window and ready the onwindowclosing for when receptionistview is closed
             _parentWindow = parentWindow;
-            Closing += OnWindowClosing;
+            //Closing += OnWindowClosing;
         }
 
         private void InitializeHeadLabels() {
@@ -84,8 +84,7 @@ namespace Project_2_EMS {
 
             // Show the parent window after hiding the receptionist view window
             Hide();
-            var mainWindow = _parentWindow;
-            mainWindow.Show();
+            _parentWindow.Show();
         }
 
         private void OnWindowClosing(object sender, CancelEventArgs e) {
@@ -95,8 +94,9 @@ namespace Project_2_EMS {
             }
 
             // Close the parent window when the receptionist view window is closed
-            var mainWindow = _parentWindow;
-            mainWindow.Close();
+            if (!_parentWindow.IsActive) {
+                _parentWindow.Close();
+            }
         }
 
         private void ControlButton_Click(object sender, RoutedEventArgs e) {

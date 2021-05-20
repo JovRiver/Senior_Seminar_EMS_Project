@@ -16,8 +16,6 @@ This application contains a login screen and four views.
 
 I personally worked on the receptionist view.
 
-Reception Login:
+Our first attempt at the project left it in an untenable state, so I have decided to work on refactoring the whole project in order to bring it more in line with an MVC design pattern.
 
- - Username: r
-
- - Password: p
+I will update this as I make progress.

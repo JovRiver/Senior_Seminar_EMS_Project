@@ -18,4 +18,6 @@ I personally worked on the receptionist view.
 
 Our first attempt at the project left it in an untenable state, so I have decided to work on refactoring the whole project in order to bring it more in line with an MVC design pattern.
 
+Note: I created a legacy branch to hold the original build for comparison.
+
 I will update this as I make progress.

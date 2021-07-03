@@ -1,7 +1,7 @@
 # Software_Engineering_EMS_Project
 
 Our project for Software Engineering. In this project, we worked in a group to create a simplistic representation of an electronic medical service.
-We used Visual Studio 2019 for this project. 
+We used Visual Studio 2019 for this project and Windows Presentation Foundation (WPF). 
 
 This application contains a login screen and four views.
 

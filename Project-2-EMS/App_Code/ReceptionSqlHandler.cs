@@ -54,7 +54,7 @@ namespace Project_2_EMS {
         }
 
         public string DeleteAppointmentFromDb() {
-          String query = "DELETE FROM Appointments " +
+            String query = "DELETE FROM Appointments " +
                          "WHERE VisitID = @visitId";
 
             return query;

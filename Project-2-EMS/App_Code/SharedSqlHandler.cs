@@ -21,8 +21,8 @@ namespace Project_2_EMS {
           break;
         case "VisitId":
           query = "SELECT * " +
-                         "FROM Appointments " +
-                         "WHERE VisitID = @visitId;";
+                  "FROM Appointments " +
+                  "WHERE VisitID = @visitId;";
           break;
         default:
           break;

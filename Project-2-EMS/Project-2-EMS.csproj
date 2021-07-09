@@ -102,6 +102,10 @@
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatabaseModels\DatabaseConnectionManager.cs" />
+    <Compile Include="Models\DatabaseModels\DatabaseDeletionManager.cs" />
+    <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
+    <Compile Include="Models\DatabaseModels\DatabaseUpdateManager.cs" />
     <Compile Include="NewAppointmentWindow.xaml.cs">
       <DependentUpon>NewAppointmentWindow.xaml</DependentUpon>
     </Compile>
@@ -202,6 +206,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="Views\DoctorViews\" />
+    <Folder Include="Views\NurseViews\" />
+    <Folder Include="Views\PatientViews\" />
+    <Folder Include="Views\ReceptionistViews\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -106,6 +106,9 @@
     <Compile Include="Models\DatabaseModels\DatabaseDeletionManager.cs" />
     <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
     <Compile Include="Models\DatabaseModels\DatabaseUpdateManager.cs" />
+    <Compile Include="Models\PatientModels\Patient.cs" />
+    <Compile Include="Models\PatientModels\PatientAppointment.cs" />
+    <Compile Include="Models\PatientModels\PatientPrescription.cs" />
     <Compile Include="NewAppointmentWindow.xaml.cs">
       <DependentUpon>NewAppointmentWindow.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Models\StaffModels\" />
     <Folder Include="Views\DoctorViews\" />
     <Folder Include="Views\NurseViews\" />
     <Folder Include="Views\PatientViews\" />

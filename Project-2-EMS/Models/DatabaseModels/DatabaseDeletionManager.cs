@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    class DatabaseDeletionManager {
+    public class DatabaseDeletionManager {
     }
 }

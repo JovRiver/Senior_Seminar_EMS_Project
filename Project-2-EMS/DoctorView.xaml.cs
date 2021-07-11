@@ -99,7 +99,8 @@ namespace Project_2_EMS {
           PopulatePrescriptionDataGrid(patient.PatientId);
         }
       }
-    private int GeneratePrescriptionId() {
+    
+      private int GeneratePrescriptionId() {
       int prescriptionId = 0;
 
       DoctorSqlHandler doctorSql = new DoctorSqlHandler();

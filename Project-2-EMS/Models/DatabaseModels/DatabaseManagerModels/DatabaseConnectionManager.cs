@@ -8,11 +8,11 @@ namespace Project_2_EMS.Models.DatabaseModels {
     public class DatabaseConnectionManager {
         public DatabaseConnectionManager() { }
 
-        private string GetDBConnectionString() {
+        private static string GetDBConnectionString() {
             return ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString;
         }
 
-        public SqlConnection ConnectToDatabase() {
+        public static SqlConnection ConnectToDatabase() {
             return new SqlConnection(GetDBConnectionString());
         }
     }

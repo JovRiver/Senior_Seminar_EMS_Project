@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 using Project_2_EMS.Models.PatientModels;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class DatabaseQueryManager {
-        private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
+    public class DatabaseQueryManager : DatabaseConnectionManager {
 
-        public DatabaseQueryListManager MakeQuery(String queryBy, String queryType, String listType) {
+        public DatabaseQueryListManager MakeQuery(SqlCommandParameters parameters, String queryTable, String queryBy, String queryType, String listType) {
             DatabaseQueryListManager listManager;
 
             switch (listType.ToLower()) {
@@ -29,13 +28,14 @@ namespace Project_2_EMS.Models.DatabaseModels {
                     break;
             }
 
-            ExecuteQuery(queryBy, queryType, listManager);
+            ExecuteQuery(parameters, queryTable, queryBy, queryType, listManager);
             return listManager;
         }
 
-        private void ExecuteQuery(String queryBy, String queryType, DatabaseQueryListManager queryList) {
-            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
-                using (SqlCommand command = AppointmentSQLCommands(queryBy)) {
+        private void ExecuteQuery(SqlCommandParameters parameters, String queryTable, String queryBy, String queryType, DatabaseQueryListManager listType) {
+            using (SqlConnection connection = ConnectToDatabase()) {
+                SqlCommandManager commandManager = new SqlCommandManager();
+                using (SqlCommand command = commandManager.CreateCommandWithParameters(parameters, queryTable, queryBy, connection)) {
                     try {
                         switch (queryType.ToLower()) {
                             case "delete":

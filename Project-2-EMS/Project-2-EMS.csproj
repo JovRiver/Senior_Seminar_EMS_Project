@@ -103,12 +103,13 @@
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DatabaseModels\DatabaseConnectionManager.cs" />
-    <Compile Include="Models\DatabaseModels\DatabaseDeletionManager.cs" />
+    <Compile Include="Models\DatabaseModels\DatabaseQueryListManager.cs" />
     <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
-    <Compile Include="Models\DatabaseModels\DatabaseUpdateManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlCommandParameters.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
     <Compile Include="Models\PatientModels\PatientPrescription.cs" />
+    <Compile Include="Models\StaffModels\StaffMember.cs" />
     <Compile Include="NewAppointmentWindow.xaml.cs">
       <DependentUpon>NewAppointmentWindow.xaml</DependentUpon>
     </Compile>
@@ -147,6 +148,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReceptionistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DoctorViews\DoctorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NurseViews\NurseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientViews\PatientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceptionistViews\ReceptionistBillingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceptionistViews\ReceptionistCalendarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceptionistViews\ReceptionistSignInView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,11 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Models\StaffModels\" />
-    <Folder Include="Views\DoctorViews\" />
-    <Folder Include="Views\NurseViews\" />
-    <Folder Include="Views\PatientViews\" />
-    <Folder Include="Views\ReceptionistViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

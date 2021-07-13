@@ -617,15 +617,16 @@ namespace Project_2_EMS {
         }
 
         private Boolean IsValidPayment() {
-            bool isValid = true;
+            //bool isValid = true;
             /** 
              *  Payment is only valid if the text contains only digits and decimals
              *  (I realize more needs to be done to ensure a valid input but I needed to spend
              *  more time on the rest of the project)
              */
-            _ = !Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$") ? isValid = false : true;
+            //_ = !Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$") ? isValid = false : true;
 
-            return isValid;
+            return Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$");
+            //return isValid;
         }
 
         private void ConfirmPayment(int patientId, Decimal amountPaid) {

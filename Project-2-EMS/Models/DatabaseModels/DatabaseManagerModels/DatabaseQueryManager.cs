@@ -57,35 +57,5 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 }
             }
         }
-
-        private SqlCommand AppointmentSQLCommands(String queryBy) {
-            SqlCommand command = new SqlCommand();
-
-            switch (queryBy) {
-
-            }
-
-            return command;
-        }
-
-        private SqlCommand PatientInfoSQLCommands(String queryBy) {
-            SqlCommand command = new SqlCommand();
-
-            switch (queryBy) {
-
-            }
-
-            return command;
-        }
-
-        private SqlCommand PrescriptionSQLCommands(String queryBy) {
-            SqlCommand command = new SqlCommand();
-
-            switch (queryBy) {
-
-            }
-
-            return command;
-        }
     }
 }

@@ -8,7 +8,6 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public List<PatientPrescription> Prescriptions { get; }
 
         public DatabaseQueryListManager() { }
-
         public DatabaseQueryListManager(List<PatientAppointment> appointments) : this(appointments, null, null) { }
         public DatabaseQueryListManager(List<Patient> patients) : this(null, patients, null) { }
         public DatabaseQueryListManager(List<PatientPrescription> prescriptions) : this(null, null, prescriptions) { }

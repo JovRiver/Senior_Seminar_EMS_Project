@@ -10,7 +10,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public SqlCommandManager() { }
 
-        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, String queryTable, String queryBy, SqlConnection connection) {
+        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, String queryBy, SqlConnection connection) {
             SqlCommand command = new SqlCommand();
 
             return command;

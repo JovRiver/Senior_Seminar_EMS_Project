@@ -5,8 +5,8 @@ namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlCommandParameters {
         public String FirstName { get; }
         public String LastName { get; }
-        public DateTime StartDate { get; }
-        public DateTime EndDate { get; }
+        public DateTime FirstDate { get; }
+        public DateTime SecondDate { get; }
         public decimal Cost { get; }
 
         public Patient Patient { get; }
@@ -37,8 +37,8 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public SqlCommandParameters(String fName, String lName, DateTime startDate, DateTime endDate, decimal cost, PatientAppointment appt, Patient pat, PatientPrescription pres) {
             FirstName = fName;
             LastName = lName;
-            StartDate = startDate;
-            EndDate = endDate;
+            FirstDate = startDate;
+            SecondDate = endDate;
             Cost = cost;
             Appointment = appt;
             Patient = pat;

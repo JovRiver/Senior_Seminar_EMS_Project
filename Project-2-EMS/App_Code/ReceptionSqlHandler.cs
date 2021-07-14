@@ -10,7 +10,7 @@ namespace Project_2_EMS {
         public string PatientNameExactQuerier() {
             string query = "SELECT * " +
                            "FROM PatientInfo " +
-                           "WHERE FirstName LIKE @firstName AND LastName LIKE   @lastName;";
+                           "WHERE FirstName LIKE @firstName AND LastName LIKE @lastName;";
             return query;
         }
 
@@ -44,6 +44,7 @@ namespace Project_2_EMS {
             return query;
         }
 
+        // NOT NEEDED, USE ABOVE TO UPDATE PATIENT BALANCE
         public string UpdatePatientBalanceNewAppointment() {
             String query = "UPDATE PatientInfo " +
                            "SET Balance = Balance + @cost " +

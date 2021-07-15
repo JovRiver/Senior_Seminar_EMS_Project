@@ -102,14 +102,13 @@
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatabaseModels\DatabaseManagerModels\DatabaseConnectionManager.cs" />
-    <Compile Include="Models\DatabaseModels\DatabaseManagerModels\DatabaseQueryListManager.cs" />
-    <Compile Include="Models\DatabaseModels\DatabaseManagerModels\DatabaseQueryManager.cs" />
-    <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandManager.cs" />
-    <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandParameters.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringModels\SqlDeleteStrings.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringModels\SqlQueryStrings.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringModels\SqlUpdateStrings.cs" />
+    <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlCommandManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlCommandParameters.cs" />
+    <Compile Include="Models\DatabaseModels\SqlStringsDelete.cs" />
+    <Compile Include="Models\DatabaseModels\SqlStringsInsert.cs" />
+    <Compile Include="Models\DatabaseModels\SqlStringsSelect.cs" />
+    <Compile Include="Models\DatabaseModels\SqlStringsUpdate.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
     <Compile Include="Models\PatientModels\PatientPrescription.cs" />
@@ -240,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Models\ComparatorModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

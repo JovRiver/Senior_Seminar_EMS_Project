@@ -381,7 +381,7 @@ namespace Project_2_EMS {
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Error when attempting to add new patient to database.");
+                    MessageBox.Show($"Error when attempting to add new patient to database.\nError: {e}");
                 }
             }
         }

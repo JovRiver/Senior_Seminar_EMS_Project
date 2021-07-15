@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Project_2_EMS.Models.DatabaseModels {
+    public class SqlStringsDelete {
 
-namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlQueryStrings {
-        private String PatientAppointmentQueryParameters(String parameters, String queryBy) {
+        public SqlStringsDelete() { }
+
+        public string GetDeletionString(string queryTable, string queryBy) {
+            switch(queryTable.ToLower()) {
+                case "appointment":
+                    return AppointmentDeletionStrings(queryBy);
+                case "patientinfo":
+                    return PatientInfoDeletionStrings(queryBy);
+                case "prescription":
+                    return PrescriptionDeletionStrings(queryBy);
+                default:
+                    return "";
+            }
+        }
+
+        private string AppointmentDeletionStrings(string queryBy) {
             switch (queryBy.ToLower()) {
                 case "patientid":
                     return "";
@@ -23,7 +33,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             }
         }
 
-        private String PatientInfoQueryParameters(String parameters, String queryBy) {
+        private string PatientInfoDeletionStrings(string queryBy) {
             switch (queryBy.ToLower()) {
                 case "patientid":
                     return "";
@@ -40,7 +50,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             }
         }
 
-        private String PatientPrescriptionQueryParameters(String parameters, String queryBy) {
+        private string PrescriptionDeletionStrings(string queryBy) {
             switch (queryBy.ToLower()) {
                 case "patientid":
                     return "";

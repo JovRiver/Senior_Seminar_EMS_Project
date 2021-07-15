@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlCommandManager {
 
         public SqlCommandManager() { }
 
-        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, String queryBy, SqlConnection connection) {
+        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, SqlConnection connection, string queryTable, string queryBy) {
             SqlCommand command = new SqlCommand();
 
             return command;

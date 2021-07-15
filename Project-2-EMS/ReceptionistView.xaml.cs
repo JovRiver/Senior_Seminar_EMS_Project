@@ -313,6 +313,7 @@ namespace Project_2_EMS {
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex) {
+                    string str = ex.ToString();
                     MessageBox.Show("Error when attempting to update patient balance.");
                 }
             }

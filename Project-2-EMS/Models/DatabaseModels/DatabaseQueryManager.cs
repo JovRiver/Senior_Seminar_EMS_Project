@@ -10,34 +10,37 @@ namespace Project_2_EMS.Models.DatabaseModels {
         private List<PatientAppointment> Appointments;
         private List<PatientPrescription> Prescriptions;
 
-        public List<PatientAppointment> QueryAppointments(SqlCommandParameters parameters, string queryTable, string queryBy, string queryType) {
+        public List<PatientAppointment> QueryAppointments(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Appointments = new List<PatientAppointment>();
-            ExecuteQuery(parameters, queryTable, queryBy, queryType, nameof(Appointments));
+            ExecuteQuery(parameters, queryManager, nameof(Appointments));
             return Appointments;
         }
 
-        public List<Patient> QueryPatients(SqlCommandParameters parameters, string queryTable, string queryBy, string queryType) {
+        public List<Patient> QueryPatients(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Patients = new List<Patient>();
-            ExecuteQuery(parameters, queryTable, queryBy, queryType, nameof(Patients));
+            ExecuteQuery(parameters, queryManager, nameof(Patients));
             return Patients;
         }
 
-        public List<PatientPrescription> QueryPrescriptions(SqlCommandParameters parameters, string queryTable, string queryBy, string queryType) {
+        public List<PatientPrescription> QueryPrescriptions(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Prescriptions = new List<PatientPrescription>();
-            ExecuteQuery(parameters, queryTable, queryBy, queryType, nameof(Prescriptions));
+            ExecuteQuery(parameters, queryManager, nameof(Prescriptions));
             return Prescriptions;
         }
 
-        private void ExecuteQuery(SqlCommandParameters parameters, string queryTable, string queryBy, string queryType, string returnType) {
+        private void ExecuteQuery(SqlCommandParameters parameters, SqlQueryManager queryManager, string returnType) {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString)) {
-                using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(parameters, connection, queryTable, queryBy)) {
+                using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(parameters, connection, queryManager)) {
                     try {
                         connection.Open();
-                        switch (queryType.ToLower()) {
+                        switch (queryManager.QueryType.ToLower()) {
                             case "delete":
                                 _ = command.ExecuteNonQuery();
                                 break;
-                            case "return":
+                            case "insert":
+                                _ = command.ExecuteNonQuery();
+                                break;
+                            case "select":
                                 using (SqlDataReader dataReader = command.ExecuteReader()) {
                                     ExecuteDataReader(dataReader, returnType);
                                 }

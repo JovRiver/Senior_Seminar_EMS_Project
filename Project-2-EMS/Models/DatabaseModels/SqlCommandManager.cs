@@ -6,7 +6,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public SqlCommandManager() { }
 
-        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, SqlConnection connection, string queryTable, string queryBy) {
+        public SqlCommand CreateCommandWithParameters(SqlCommandParameters parameters, SqlConnection connection, SqlQueryManager queryManager) {
             SqlCommand command = new SqlCommand();
 
             return command;

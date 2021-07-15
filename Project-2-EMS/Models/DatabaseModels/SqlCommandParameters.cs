@@ -25,14 +25,17 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public SqlCommandParameters(PatientAppointment appointment) 
             : this("", "", DateTime.MinValue, DateTime.MinValue, decimal.Zero, appointment, null, null) { }
 
+        public SqlCommandParameters(PatientAppointment appointment, decimal cost)
+            : this("", "", DateTime.MinValue, DateTime.MinValue, cost, appointment, null, null) { }
+
         public SqlCommandParameters(Patient patient) 
             : this("", "", DateTime.MinValue, DateTime.MinValue, decimal.Zero, null, patient, null) { }
 
+        public SqlCommandParameters(Patient patient, DateTime appointmentDate)
+            : this("", "", appointmentDate, DateTime.MinValue, decimal.Zero, null, patient, null) { }
+
         public SqlCommandParameters(PatientPrescription prescription) 
             : this("", "", DateTime.MinValue, DateTime.MinValue, decimal.Zero, null, null, prescription) { }
-
-        public SqlCommandParameters(PatientAppointment appointment, decimal cost) 
-            : this("", "", DateTime.MinValue, DateTime.MinValue, cost, appointment, null, null) { }
 
         public SqlCommandParameters(string firstName, string lastName, DateTime startDate, DateTime endDate, decimal cost, PatientAppointment appointment, Patient patient, PatientPrescription prescription) {
             FirstName = firstName;

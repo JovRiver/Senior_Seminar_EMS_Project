@@ -105,10 +105,8 @@
     <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandParameters.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringsDelete.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringsInsert.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringsSelect.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringsUpdate.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlStringManager.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
     <Compile Include="Models\PatientModels\PatientPrescription.cs" />

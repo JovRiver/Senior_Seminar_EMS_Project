@@ -10,19 +10,13 @@ namespace Project_2_EMS {
       String query = String.Empty;
       switch (mode) {
         case "DateRange":
-          query = "SELECT * " +
-                  "FROM Appointments " +
-                  "WHERE ApptDate BETWEEN @ApptStartDate AND @ApptEndDate;";
+          query = "SELECT * FROM Appointments WHERE ApptDate BETWEEN @ApptStartDate AND @ApptEndDate;";
           break;
         case "PatientId":
-          query = "SELECT * " +
-                  "FROM Appointments " +
-                  "WHERE PatientID = @PatientId";
+          query = "SELECT * FROM Appointments WHERE PatientID = @PatientId";
           break;
         case "VisitId":
-          query = "SELECT * " +
-                  "FROM Appointments " +
-                  "WHERE VisitID = @visitId;";
+          query = "SELECT * FROM Appointments WHERE VisitID = @visitId;";
           break;
         default:
           break;
@@ -31,31 +25,25 @@ namespace Project_2_EMS {
     }
 
     public string PatientNameQuerier() {
-      string query = "SELECT * " +
-                     "FROM PatientInfo " +
-                     "WHERE FirstName LIKE @firstName OR LastName LIKE @lastName;";
+      string query = "SELECT * FROM PatientInfo WHERE FirstName LIKE @firstName OR LastName LIKE @lastName;";
 
       return query;
     }
 
     public string PatientIdQuerier() {
-      string query = "SELECT * " +
-                     "FROM PatientInfo " +
-                     "WHERE PatientID = @PatientId;";
+      string query = "SELECT * FROM PatientInfo WHERE PatientID = @PatientId;";
 
       return query;
     }
 
     public string NumberOfPatientsQuerier() {
-      String query = "SELECT COUNT(*) " +
-                     "FROM PatientInfo;";
+      String query = "SELECT COUNT(*) FROM PatientInfo;";
 
       return query;
     }
 
     public string NumberOfAppointmentsQuerier() {
-      String query = "SELECT COUNT(*) " +
-                     "FROM Appointments";
+      String query = "SELECT COUNT(*) FROM Appointments";
 
       return query;
     }

@@ -12,23 +12,26 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public List<PatientAppointment> QueryAppointments(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Appointments = new List<PatientAppointment>();
-            ExecuteQuery(parameters, queryManager, nameof(Appointments));
+            AppointmentQueryStrings appointmentQuery = new AppointmentQueryStrings();
+            ExecuteQuery(parameters, queryManager, appointmentQuery);
             return Appointments;
         }
 
         public List<Patient> QueryPatients(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Patients = new List<Patient>();
-            ExecuteQuery(parameters, queryManager, nameof(Patients));
+            PatientInfoQueryStrings patientInfoQuery = new PatientInfoQueryStrings();
+            ExecuteQuery(parameters, queryManager, patientInfoQuery);
             return Patients;
         }
 
         public List<PatientPrescription> QueryPrescriptions(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             Prescriptions = new List<PatientPrescription>();
-            ExecuteQuery(parameters, queryManager, nameof(Prescriptions));
+            PrescriptionQueryStrings prescriptionQuery = new PrescriptionQueryStrings();
+            ExecuteQuery(parameters, queryManager, prescriptionQuery);
             return Prescriptions;
         }
 
-        private void ExecuteQuery(SqlCommandParameters parameters, SqlQueryManager queryManager, string returnType) {
+        private void ExecuteQuery(SqlCommandParameters parameters, SqlQueryManager queryManager, ITableQueryStrings tableQuery) {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString)) {
                 using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(parameters, connection, queryManager)) {
                     try {
@@ -42,7 +45,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                                 break;
                             case "select":
                                 using (SqlDataReader dataReader = command.ExecuteReader()) {
-                                    ExecuteDataReader(dataReader, returnType);
+                                    ExecuteDataReader(dataReader, "place holder");
                                 }
                                 break;
                             case "update":
@@ -59,8 +62,8 @@ namespace Project_2_EMS.Models.DatabaseModels {
             }
         }
 
-        private void ExecuteDataReader(SqlDataReader dataReader, string returnType) {
-            switch (returnType) {
+        private void ExecuteDataReader(SqlDataReader dataReader, string returnName) {
+            switch (returnName) {
                 case nameof(Appointments):
                     while (dataReader.Read()) {
                         int visitId = dataReader.GetInt32(0);

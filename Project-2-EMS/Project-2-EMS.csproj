@@ -106,7 +106,10 @@
     <Compile Include="Models\DatabaseModels\SqlCommandManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandParameters.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryManager.cs" />
-    <Compile Include="Models\DatabaseModels\SqlStringManager.cs" />
+    <Compile Include="Models\DatabaseModels\TableQueryStringModels\AppointmentQueryStrings.cs" />
+    <Compile Include="Models\DatabaseModels\TableQueryStringModels\ITableQueryStrings.cs" />
+    <Compile Include="Models\DatabaseModels\TableQueryStringModels\PatientInfoQueryStrings.cs" />
+    <Compile Include="Models\DatabaseModels\TableQueryStringModels\PrescriptionQueryStrings.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
     <Compile Include="Models\PatientModels\PatientPrescription.cs" />
@@ -238,6 +241,7 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Models\ComparatorModels\" />
+    <Folder Include="Models\DatabaseModels\TableDataReaderModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

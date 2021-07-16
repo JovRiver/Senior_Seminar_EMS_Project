@@ -4,10 +4,16 @@
         public string QueryBy { get; }
         public string QueryType { get; }
 
-        public SqlQueryManager(string queryTable, string queryBy, string queryType) {
+        public string QueryString { get; set; }
+
+        public SqlQueryManager(string queryTable, string queryType, string queryBy) {
             QueryTable = queryTable;
             QueryBy = queryBy;
             QueryType = queryType;
+        }
+
+        public void FillQueryString(string queryString) {
+            QueryString = queryString;
         }
     }
 }

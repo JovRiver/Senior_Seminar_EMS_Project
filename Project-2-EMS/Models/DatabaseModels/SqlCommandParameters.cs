@@ -13,6 +13,8 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public PatientAppointment Appointment { get; }
         public PatientPrescription Prescription { get; }
 
+        public SqlCommandParameters() { }
+
         public SqlCommandParameters(string firstName, string lastName)
             : this(firstName, lastName, DateTime.MinValue, DateTime.MinValue, decimal.Zero, null, null, null) { }
 

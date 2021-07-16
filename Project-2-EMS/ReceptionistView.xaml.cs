@@ -26,8 +26,8 @@ namespace Project_2_EMS {
         private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
 
         // Create lists to hold appointments and patients for global use
-        private List<PatientAppointment> appointments = new List<PatientAppointment>();
-        private List<Patient> patients = new List<Patient>();
+        private readonly List<PatientAppointment> appointments = new List<PatientAppointment>();
+        private readonly List<Patient> patients = new List<Patient>();
 
         // Create global variables to hold the current week date and the previous week date
         // These are used when interacting with the calendar
@@ -313,8 +313,7 @@ namespace Project_2_EMS {
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex) {
-                    string str = ex.ToString();
-                    MessageBox.Show("Error when attempting to update patient balance.");
+                    MessageBox.Show($"Error when attempting to update patient balance.\nError: {ex}");
                 }
             }
         }

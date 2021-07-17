@@ -11,6 +11,8 @@ namespace Project_2_EMS.Models.PatientModels {
         public string NurseNote { get; }
         public string DoctorNote { get; }
 
+        public PatientAppointment() { }
+
         public PatientAppointment(int visitId, int patientId, DateTime apptDate, TimeSpan apptTime, decimal cost, string receptNote, string nurseNote, string doctorNote) {
             VisitId = visitId;
             PatientId = patientId;

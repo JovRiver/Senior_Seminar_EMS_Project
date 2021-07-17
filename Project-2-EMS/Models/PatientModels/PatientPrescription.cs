@@ -9,6 +9,8 @@ namespace Project_2_EMS.Models.PatientModels {
         public String PrescriptionNotes { get; }
         public int Refills { get; }
 
+        public PatientPrescription() { }
+
         public PatientPrescription(int prescriptionID, int patientID, int visitID, String prescriptionName, String presciprtionNotes, int refills) {
             PrescriptionID = prescriptionID;
             PatientID = patientID;

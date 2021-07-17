@@ -8,6 +8,8 @@ namespace Project_2_EMS.Models.PatientModels {
         public string Address { get; }
         public decimal Balance { get; }
 
+        public Patient() { }
+
         public Patient(int patientId, string firstName, string lastName, string address = null, decimal balance = Decimal.Zero) {
             PatientId = patientId;
             FirstName = firstName;

@@ -1,4 +1,6 @@
-﻿namespace Project_2_EMS.Models.DatabaseModels {
+﻿using System.Data.SqlClient;
+
+namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlAppointmentQuery : ISqlTableQuery {
         public string Delete(string queryBy) => new SqlAppointmentStrings(queryBy).DeleteString();
 
@@ -7,5 +9,7 @@
         public string Select(string queryBy) => new SqlAppointmentStrings(queryBy).SelectString();
 
         public string Update(string queryBy) => new SqlAppointmentStrings(queryBy).UpdateString();
+
+        public void Read(SqlCommand command, ListManager listManager) => new SqlCommandAppointmentReader().Read(command, listManager);
     }
 }

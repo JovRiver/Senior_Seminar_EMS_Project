@@ -14,8 +14,6 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public string GetQueryString() => TypeQuery.GetQueryString(TableQuery, QueryBy);
 
-        public void ExecuteQuery(SqlCommand command) {
-
-        }
+        public void ExecuteQuery(SqlCommand command, ListManager listManager) => TypeQuery.ExecuteDatabaseQuery(TableQuery, command, listManager);
     }
 }

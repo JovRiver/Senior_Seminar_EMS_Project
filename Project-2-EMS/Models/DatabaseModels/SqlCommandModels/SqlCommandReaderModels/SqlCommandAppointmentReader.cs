@@ -1,10 +1,13 @@
 ﻿using Project_2_EMS.Models.PatientModels;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlCommandAppointmentReader : ISqlCommandTableReader {
         public void Read(SqlCommand command, ListManager listManager) {
+            listManager.AppointmentList = new List<PatientAppointment>();
+
             using (SqlDataReader dataReader = command.ExecuteReader()) {
                 while (dataReader.Read()) {
                     int visitId = dataReader.GetInt32(0);

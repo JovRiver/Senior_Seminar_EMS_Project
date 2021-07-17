@@ -6,7 +6,7 @@ using Project_2_EMS.Models.PatientModels;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class DatabaseQueryManager {
-        private readonly ListManager ListManager;
+        private readonly ListManager ListManager = new ListManager();
         
         public List<PatientAppointment> QueryAppointments(SqlCommandParameters parameters, SqlQueryManager queryManager) {
             ExecuteQuery(parameters, queryManager);
@@ -28,7 +28,6 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(parameters, connection, queryManager)) {
                     try {
                         connection.Open();
-
                         queryManager.ExecuteQuery(command, ListManager);
                     }
                     catch (Exception e) {

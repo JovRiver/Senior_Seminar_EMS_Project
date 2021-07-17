@@ -110,7 +110,6 @@
     <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandReaderModels\SqlCommandAppointmentReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandReaderModels\SqlCommandPatientInfoReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandReaderModels\SqlCommandPrescriptionReader.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\ISqlTableStrings.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\SqlAppointmentStrings.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\SqlPatientInfoStrings.cs" />

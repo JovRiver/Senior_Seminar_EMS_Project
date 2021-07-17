@@ -6,29 +6,46 @@ using Project_2_EMS.Models.PatientModels;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class DatabaseQueryManager {
+        private readonly ISqlTypeQuery TypeQuery;
+        private readonly ISqlTableQuery TableQuery;
+        private readonly SqlCommandParameters Parameters;
+        private readonly string QueryBy;
+
         private readonly ListManager ListManager = new ListManager();
-        
-        public List<PatientAppointment> QueryAppointments(SqlCommandParameters parameters, SqlQueryManager queryManager) {
-            ExecuteQuery(parameters, queryManager);
+
+        public DatabaseQueryManager(SqlCommandParameters parameters, ISqlTypeQuery typeQuery, ISqlTableQuery tableQuery, string queryBy) {
+            TypeQuery = typeQuery;
+            TableQuery = tableQuery;
+            Parameters = parameters;
+            QueryBy = queryBy;
+        }
+
+        public List<PatientAppointment> QueryAppointments() {
+            ExecuteQuery();
             return ListManager.AppointmentList;
         }
 
-        public List<Patient> QueryPatients(SqlCommandParameters parameters, SqlQueryManager queryManager) {
-            ExecuteQuery(parameters, queryManager);
+        public List<Patient> QueryPatients() {
+            ExecuteQuery();
             return ListManager.PatientList;
         }
 
-        public List<PatientPrescription> QueryPrescriptions(SqlCommandParameters parameters, SqlQueryManager queryManager) {
-            ExecuteQuery(parameters, queryManager);
+        public List<PatientPrescription> QueryPrescriptions() {
+            ExecuteQuery();
             return ListManager.PrescriptionList;
         }
 
-        private void ExecuteQuery(SqlCommandParameters parameters, SqlQueryManager queryManager) {
+        private string GetQueryString() => TypeQuery.GetQueryString(TableQuery, QueryBy);
+
+        private void ExecuteQuery() {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString)) {
-                using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(parameters, connection, queryManager)) {
+                using (SqlCommand command = new SqlCommandManager().CreateCommandWithParameters(GetQueryString(), connection, Parameters)) {
+                    
+                    
+                    
                     try {
                         connection.Open();
-                        queryManager.ExecuteQuery(command, ListManager);
+                        TypeQuery.ExecuteDatabaseQuery(TableQuery, command, ListManager);
                     }
                     catch (Exception e) {
                         Console.WriteLine($"Error Executing Database Query:\n{e}");

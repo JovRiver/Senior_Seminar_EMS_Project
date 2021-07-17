@@ -1,5 +1,5 @@
 ﻿namespace Project_2_EMS.Models.DatabaseModels {
-    interface ITableQueryStrings {
+    public interface ISqlTableQuery {
         string Delete(string queryBy);
         string Insert();
         string Select(string queryBy);

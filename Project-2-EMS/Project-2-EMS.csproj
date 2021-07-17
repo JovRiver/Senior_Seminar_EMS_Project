@@ -104,12 +104,22 @@
     </Compile>
     <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlCommandModels\SqlCommandReaderModels\ISqlCommandTableReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlCommandParameters.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryManager.cs" />
-    <Compile Include="Models\DatabaseModels\TableQueryStringModels\AppointmentQueryStrings.cs" />
-    <Compile Include="Models\DatabaseModels\TableQueryStringModels\ITableQueryStrings.cs" />
-    <Compile Include="Models\DatabaseModels\TableQueryStringModels\PatientInfoQueryStrings.cs" />
-    <Compile Include="Models\DatabaseModels\TableQueryStringModels\PrescriptionQueryStrings.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryManagerModels\SqlQueryManager.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\ISqlTableStrings.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\SqlAppointmentStrings.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\SqlPatientInfoStrings.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryStringModels\SqlPrescriptionStrings.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTableModels\ISqlTableQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTableModels\SqlAppointmentQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTableModels\SqlPatientInfoQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTableModels\SqlPrescriptionQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTypeModels\ISqlTypeQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTypeModels\SqlDeleteQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTypeModels\SqlInsertQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTypeModels\SqlSelectQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryTypeModels\SqlUpdateQuery.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
     <Compile Include="Models\PatientModels\PatientPrescription.cs" />
@@ -241,7 +251,7 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Models\ComparatorModels\" />
-    <Folder Include="Models\DatabaseModels\TableDataReaderModels\" />
+    <Folder Include="Models\DatabaseModels\SqlCommandModels\SqlCommandManagerModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class AppointmentQueryStrings : ITableQueryStrings {
+    public class SqlAppointmentStrings : ISqlTableStrings {
         private readonly Dictionary<string, string> DeleteDictionary = new Dictionary<string, string>();
         private readonly Dictionary<string, string> SelectDictionary = new Dictionary<string, string>();
 
-        public AppointmentQueryStrings() {
+        private readonly string QueryBy;
+
+        public SqlAppointmentStrings(string queryBy) {
             DeleteDictionary.Add("delete_visitid", "DELETE FROM Appointments WHERE VisitID = @visitId;");
 
             SelectDictionary.Add("patientid", "SELECT * FROM Appointments WHERE PatientID = @patientId;");
@@ -13,22 +15,18 @@ namespace Project_2_EMS.Models.DatabaseModels {
             SelectDictionary.Add("visitid", "SELECT * FROM Appointments WHERE VisitID = @visitId;");
             SelectDictionary.Add("daterange", "SELECT * FROM Appointments WHERE ApptDate BETWEEN @apptStartDate AND @apptEndDate;");
             SelectDictionary.Add("count", "SELECT COUNT(*) FROM Appointments;");
+
+            QueryBy = queryBy;
         }
 
-        public string Delete(string queryBy) {
-            return DeleteDictionary.TryGetValue(queryBy, out string queryString) ? queryString : "";
-        }
+        public string DeleteString() => DeleteDictionary.TryGetValue(QueryBy, out string queryString) ? queryString : "";
 
-        public string Insert() {
+        public string InsertString() {
             return "INSERT INTO Appointments ([VisitID], [PatientID], [ApptDate], [ApptTime], [Cost], [ReceptNote], [NurseNote], [DoctorNote]) VALUES (@visitId,@patientId,@apptDate,@apptTime,@cost,@receptNote,@nurseNote,@doctorNote);";
         }
 
-        public string Select(string queryBy) {
-            return SelectDictionary.TryGetValue(queryBy, out string queryString) ? queryString : "";
-        }
+        public string SelectString() => SelectDictionary.TryGetValue(QueryBy, out string queryString) ? queryString : "";
 
-        public string Update(string queryBy) {
-            return "";
-        }
+        public string UpdateString() => "";
     }
 }

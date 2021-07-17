@@ -8,7 +8,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public SqlCommand CreateCommandWithParameters(string queryString, SqlConnection connection, SqlCommandParameters parameters) {
             SqlCommand command = new SqlCommand(queryString, connection);
-            
+
             return command;
         }
     }

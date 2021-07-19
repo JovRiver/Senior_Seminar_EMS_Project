@@ -22,7 +22,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
         }
 
         public void NonReturnQuery(INonQuery sqlQuery) {
-            SqlNoReturnReader noReturnReader = new SqlNoReturnReader();
+            SqlNonReturnReader noReturnReader = new SqlNonReturnReader();
             BeginQuery(sqlQuery, noReturnReader);
         }
         

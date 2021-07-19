@@ -129,7 +129,7 @@
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlAppointmentReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\ISqlReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlCountReader.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlNoReturnReader.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlNonReturnReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlPatientInfoReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlPrescriptionReader.cs" />
     <Compile Include="Models\PatientModels\Patient.cs" />

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlPatientInfoReader : ISqlReader {
-        public List<Patient> PatientList { get; } = new List<Patient>();
+        public List<PatientInfo> PatientList { get; } = new List<PatientInfo>();
 
         public void Read(SqlCommand command) {
             using (SqlDataReader dataReader = command.ExecuteReader()) {
@@ -15,7 +15,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                     string address = dataReader.GetString(3);
                     decimal balance = dataReader.GetDecimal(4);
 
-                    Patient patient = new Patient(patientId, firstName, lastName, address, balance);
+                    PatientInfo patient = new PatientInfo(patientId, firstName, lastName, address, balance);
                     PatientList.Add(patient);
                 }
             }

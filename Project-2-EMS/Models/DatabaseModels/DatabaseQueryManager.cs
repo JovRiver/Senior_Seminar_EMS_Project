@@ -26,7 +26,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             BeginQuery(sqlQuery, noReturnReader);
         }
         
-        public List<Patient> PatientInfoQuery(IPatientInfoListQuery sqlQuery) {
+        public List<PatientInfo> PatientInfoQuery(IPatientInfoListQuery sqlQuery) {
             SqlPatientInfoReader patientInfoReader = new SqlPatientInfoReader();
             BeginQuery(sqlQuery, patientInfoReader);
             return patientInfoReader.PatientList;

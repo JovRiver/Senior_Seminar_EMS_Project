@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlCommandAppointmentReader : ISqlCommandTableReader {
-        public void Read(SqlCommand command, ListManager listManager) {
-            listManager.AppointmentList = new List<PatientAppointment>();
+    public class SqlAppointmentReader : ISqlReader {
+        public List<PatientAppointment> AppointmentList { get; } = new List<PatientAppointment>();
 
+        public void Read(SqlCommand command) {
             using (SqlDataReader dataReader = command.ExecuteReader()) {
                 while (dataReader.Read()) {
                     int visitId = dataReader.GetInt32(0);
@@ -20,7 +20,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                     string doctorNote = dataReader.GetString(7);
 
                     PatientAppointment appointment = new PatientAppointment(visitId, patientId, apptDate, apptTime, cost, receptNote, nurseNote, doctorNote);
-                    listManager.AppointmentList.Add(appointment);
+                    AppointmentList.Add(appointment);
                 }
             }
         }

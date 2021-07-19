@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlCommandPatientInfoReader : ISqlCommandTableReader {
-        public void Read(SqlCommand command, ListManager listManager) {
-            listManager.PatientList = new List<Patient>();
+    public class SqlPatientInfoReader : ISqlReader {
+        public List<Patient> PatientList { get; } = new List<Patient>();
 
+        public void Read(SqlCommand command) {
             using (SqlDataReader dataReader = command.ExecuteReader()) {
                 while (dataReader.Read()) {
                     int patientId = dataReader.GetInt32(0);
@@ -16,7 +16,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                     decimal balance = dataReader.GetDecimal(4);
 
                     Patient patient = new Patient(patientId, firstName, lastName, address, balance);
-                    listManager.PatientList.Add(patient);
+                    PatientList.Add(patient);
                 }
             }
         }

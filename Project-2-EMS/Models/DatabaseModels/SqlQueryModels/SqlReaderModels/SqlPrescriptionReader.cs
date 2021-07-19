@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlCommandPrescriptionReader : ISqlCommandTableReader {
-        public void Read(SqlCommand command, ListManager listManager) {
-            listManager.PrescriptionList = new List<PatientPrescription>();
+    public class SqlPrescriptionReader : ISqlReader {
+        public List<PatientPrescription> PrescriptionList { get; } = new List<PatientPrescription>();
 
+        public void Read(SqlCommand command) {
             using (SqlDataReader dataReader = command.ExecuteReader()) {
                 while (dataReader.Read()) {
                     int prescriptionId = dataReader.GetInt32(0);
@@ -17,7 +17,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                     byte refills = dataReader.GetByte(5);
 
                     PatientPrescription prescription = new PatientPrescription(prescriptionId, patientId, visitId, prescriptionName, prescriptionNotes, refills);
-                    listManager.PrescriptionList.Add(prescription);
+                    PrescriptionList.Add(prescription);
                 }
             }
         }

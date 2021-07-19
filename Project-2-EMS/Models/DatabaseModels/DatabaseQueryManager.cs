@@ -40,17 +40,19 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         private void BeginQuery(ISqlQuery sqlQuery, ISqlReader sqlReader) {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString)) {
-                using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
-                                        
-                    sqlQuery.AddParameters(command);
+                using (SqlTransaction transaction = connection.BeginTransaction()) {
+                    using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
 
-                    try {
-                        connection.Open();
-                        sqlQuery.ExecuteQuery(command, sqlReader);
+                        sqlQuery.AddParameters(command);
 
-                    }
-                    catch (Exception e) {
-                        Console.WriteLine($"Error Executing Database Query:\n{e}");
+                        try {
+                            connection.Open();
+                            sqlQuery.ExecuteQuery(command, sqlReader);
+                            transaction.Commit();
+                        }
+                        catch (Exception e) {
+                            Console.WriteLine($"Error Executing Database Query:\n{e}");
+                        }
                     }
                 }
             }

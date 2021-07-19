@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectPatientInfoBy_FullName_OR : ISqlQuery, IPatientInfoListQuery {
+    public class SelectPatientInfoBy_FullName_OR : ISqlQuery, ISqlCommandParameters, IPatientInfoListQuery {
         private readonly string _FirstName;
         private readonly string _LastName;
 

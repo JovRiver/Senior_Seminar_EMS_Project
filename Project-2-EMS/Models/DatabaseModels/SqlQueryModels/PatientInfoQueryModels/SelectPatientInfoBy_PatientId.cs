@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectPatientInfoBy_PatientId : ISqlQuery, IPatientInfoListQuery {
+    public class SelectPatientInfoBy_PatientId : ISqlQuery, ISqlCommandParameters, IPatientInfoListQuery {
         private readonly int _PatientId;
 
         public SelectPatientInfoBy_PatientId(int patientId) {

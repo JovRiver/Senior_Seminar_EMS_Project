@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_Date_PatientId : ISqlQuery, IAppointmentListQuery {
+    public class SelectAppointmentBy_Date_PatientId : ISqlQuery, ISqlCommandParameters, IAppointmentListQuery {
         private readonly DateTime _AppointmentDate;
         private readonly int _PatientId;
 

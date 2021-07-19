@@ -2,7 +2,7 @@
 using System.Data;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class DeleteAppointmentBy_VisitId : ISqlQuery, INonQuery {
+    public class DeleteAppointmentBy_VisitId : ISqlQuery, ISqlCommandParameters, INonQuery {
         private readonly int _VisitId;
 
         public DeleteAppointmentBy_VisitId(int visitId) {

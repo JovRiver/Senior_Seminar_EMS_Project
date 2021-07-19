@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class InsertAppointment : ISqlQuery, INonQuery {
+    public class InsertAppointment : ISqlQuery, ISqlCommandParameters, INonQuery {
         private readonly PatientAppointment _Appointment;
 
         public InsertAppointment(PatientAppointment appointment) {

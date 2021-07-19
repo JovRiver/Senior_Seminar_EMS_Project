@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_VisitId : ISqlQuery, IAppointmentListQuery {
+    public class SelectAppointmentBy_VisitId : ISqlQuery, ISqlCommandParameters, IAppointmentListQuery {
         private readonly int _VisitId;
 
         public SelectAppointmentBy_VisitId(int visitId) {

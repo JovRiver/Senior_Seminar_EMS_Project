@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectPrescriptionBy_VisitId : ISqlQuery, IPrescriptionListQuery {
+    public class SelectPrescriptionBy_VisitId : ISqlQuery, ISqlCommandParameters, IPrescriptionListQuery {
         private readonly int _VisitId;
 
         public SelectPrescriptionBy_VisitId(int visitId) {

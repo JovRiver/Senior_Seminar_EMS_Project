@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class UpdateBalanceBy_Cost_PatientId : ISqlQuery, INonQuery {
+    public class UpdateBalanceBy_Cost_PatientId : ISqlQuery, ISqlCommandParameters, INonQuery {
         private readonly int _Cost;
         private readonly int _PatientId;
 

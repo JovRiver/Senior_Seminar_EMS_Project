@@ -43,7 +43,9 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 using (SqlTransaction transaction = connection.BeginTransaction()) {
                     using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
 
-                        sqlQuery.AddParameters(command);
+                        if ((sqlQuery as ISqlCommandParameters) != null) {
+                            (sqlQuery as ISqlCommandParameters).AddParameters(command);
+                        }
 
                         try {
                             connection.Open();

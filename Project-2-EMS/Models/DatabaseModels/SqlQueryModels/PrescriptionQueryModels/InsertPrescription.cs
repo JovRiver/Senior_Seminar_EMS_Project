@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class InsertPrescription : ISqlQuery, INonQuery {
+    public class InsertPrescription : ISqlQuery, ISqlCommandParameters, INonQuery {
         private readonly PatientPrescription _Prescription;
 
         public InsertPrescription(PatientPrescription prescription) {

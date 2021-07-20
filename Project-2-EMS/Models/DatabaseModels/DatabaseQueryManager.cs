@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class DatabaseQueryManager {
+        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=|DataDirectory|App_Data\EMR_DB.mdf; Integrated Security=True";
 
         public DatabaseQueryManager() { }
 
@@ -39,7 +40,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         private bool BeginQuery(ISqlQuery sqlQuery, ISqlReader sqlReader) {
             try {
-                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=|DataDirectory|App_Data\EMR_DB.mdf; Integrated Security=True")) {
+                using (SqlConnection connection = new SqlConnection(ConnectionString)) {
                     using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
                         connection.Open();
 

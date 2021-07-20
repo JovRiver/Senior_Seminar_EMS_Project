@@ -71,7 +71,6 @@
     <Compile Include="Models_Tests\ComparerModels_Tests\PatientInfoComparer_Test.cs" />
     <Compile Include="Models_Tests\ComparerModels_Tests\PrescriptionComparer_Test.cs" />
     <Compile Include="Models_Tests\DatabaseModels_Tests\DatabaseQueryManager_Test.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

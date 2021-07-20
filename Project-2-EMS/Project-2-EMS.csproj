@@ -102,6 +102,9 @@
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ComparerModels\AppointmentComparer.cs" />
+    <Compile Include="Models\ComparerModels\PatientInfoComparer.cs" />
+    <Compile Include="Models\ComparerModels\PrescriptionComparer.cs" />
     <Compile Include="Models\DatabaseModels\DatabaseQueryManager.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\CountAppointment.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\IAppointmentListQuery.cs" />
@@ -239,7 +242,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Models\ComparatorModels\" />
     <Folder Include="Views\DoctorViews\" />
     <Folder Include="Views\NurseViews\" />
     <Folder Include="Views\PatientViews\" />

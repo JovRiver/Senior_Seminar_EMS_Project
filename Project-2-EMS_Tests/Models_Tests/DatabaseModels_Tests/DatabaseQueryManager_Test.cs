@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Project_2_EMS.Models.ComparerModels;
 using Project_2_EMS.Models.DatabaseModels;
 using Project_2_EMS.Models.PatientModels;
 using System;
@@ -13,6 +12,8 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
     /// 
     [TestClass]
     public class DatabaseQueryManager_Test {
+        private readonly Mock<DatabaseQueryManager> Mock_DbManager = new Mock<DatabaseQueryManager>();
+
         [TestMethod]
         // Test that we can successfully connect to the database
         public void DatabaseConnection_Open_Test() {
@@ -35,29 +36,46 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
         }
 
         [TestMethod]
-        // Test a mock query to the database to check if the returned appointment and dummy appointment are equal
-        public void AppointmentQuery_Equal_Test() {
-            Mock<DatabaseQueryManager> mock_DbManager = new Mock<DatabaseQueryManager>();
-            List<PatientAppointment> list = mock_DbManager.Object.AppointmentQuery(new SelectAppointmentBy_VisitId(1));
+        // Test a mock query to the database to check if it returns an appointment list
+        public void AppointmentQuery_Test() {
+            SelectAppointmentBy_VisitId query = new SelectAppointmentBy_VisitId(1);
+            List<PatientAppointment> list = Mock_DbManager.Object.AppointmentQuery(query);
 
-            PatientAppointment appointment = new PatientAppointment(1, 1, DateTime.MinValue, TimeSpan.MinValue, decimal.Zero, "", "", "");
-
-            AppointmentComparer comparer = new AppointmentComparer();
-
-            Assert.IsTrue(comparer.Compare(appointment, list[0]) == 0);
+            Assert.IsTrue(list.Count > 0);
         }
 
         [TestMethod]
-        // Test a mock query to the database to check if the returned appointment and dummy appointment are not equal
-        public void AppointmentQuery_NotEqual_Test() {
-            Mock<DatabaseQueryManager> mock_DbManager = new Mock<DatabaseQueryManager>();
-            List<PatientAppointment> list = mock_DbManager.Object.AppointmentQuery(new SelectAppointmentBy_VisitId(1));
+        // Test a mock query to the database to check if it returns a count
+        public void CountQuery_Test() {
+            CountAppointment query = new CountAppointment();
+            int count = Mock_DbManager.Object.CountQuery(query);
 
-            PatientAppointment appointment = new PatientAppointment(2, 1, DateTime.MinValue, TimeSpan.MinValue, decimal.Zero, "", "", "");
+            Assert.IsTrue(count != -1);
+        }
 
-            AppointmentComparer comparer = new AppointmentComparer();
+        [TestMethod]
+        // Test a mock query to the database to check if it successfully executes a nonquery
+        public void NonReturnQuery_Test() {
+            UpdateBalanceBy_Cost_PatientId query = new UpdateBalanceBy_Cost_PatientId(0, 1);
+            Assert.IsTrue(Mock_DbManager.Object.NonReturnQuery(query));
+        }
 
-            Assert.IsTrue(comparer.Compare(appointment, list[0]) != 0);
+        [TestMethod]
+        // Test a mock query to the database to check if it returns a patientinfo list
+        public void PatientInfoQuery_Test() {
+            SelectPatientInfoBy_PatientId query = new SelectPatientInfoBy_PatientId(1);
+            List<PatientInfo> list = Mock_DbManager.Object.PatientInfoQuery(query);
+
+            Assert.IsTrue(list.Count > 0);
+        }
+
+        [TestMethod]
+        // Test a mock query to the database to check if it returns a prescription list
+        public void PrescriptionQuery_Test() {
+            SelectPrescriptionBy_PatientId query = new SelectPrescriptionBy_PatientId(1);
+            List<PatientPrescription> list = Mock_DbManager.Object.PrescriptionQuery(query);
+
+            Assert.IsTrue(list.Count > 0);
         }
     }
 }

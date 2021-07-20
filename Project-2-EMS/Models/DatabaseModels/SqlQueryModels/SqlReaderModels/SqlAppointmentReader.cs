@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Windows;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlAppointmentReader : ISqlReader {

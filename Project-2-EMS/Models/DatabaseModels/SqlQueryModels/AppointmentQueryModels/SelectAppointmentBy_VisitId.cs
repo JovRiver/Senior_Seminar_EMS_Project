@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class SelectAppointmentBy_VisitId : ISqlQuery, ISqlCommandParameters, IAppointmentListQuery {

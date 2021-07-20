@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Project_2_EMS.Models.DatabaseModels;
+using Project_2_EMS.Models.PatientModels;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;

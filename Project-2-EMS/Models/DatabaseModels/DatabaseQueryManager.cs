@@ -1,8 +1,8 @@
 ﻿using Project_2_EMS.Models.PatientModels;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace Project_2_EMS.Models.DatabaseModels {
     public class DatabaseQueryManager {
@@ -10,7 +10,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public DatabaseQueryManager() { }
 
         public List<PatientAppointment> AppointmentQuery(IAppointmentListQuery sqlQuery) {
-            SqlAppointmentReader appointmentReader = new SqlAppointmentReader();            
+            SqlAppointmentReader appointmentReader = new SqlAppointmentReader();
             BeginQuery(sqlQuery, appointmentReader);
             return appointmentReader.AppointmentList;
         }
@@ -25,7 +25,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             SqlNonReturnReader noReturnReader = new SqlNonReturnReader();
             BeginQuery(sqlQuery, noReturnReader);
         }
-        
+
         public List<PatientInfo> PatientInfoQuery(IPatientInfoListQuery sqlQuery) {
             SqlPatientInfoReader patientInfoReader = new SqlPatientInfoReader();
             BeginQuery(sqlQuery, patientInfoReader);
@@ -39,22 +39,18 @@ namespace Project_2_EMS.Models.DatabaseModels {
         }
 
         private void BeginQuery(ISqlQuery sqlQuery, ISqlReader sqlReader) {
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MDR_ConnStr"].ConnectionString)) {
-                using (SqlTransaction transaction = connection.BeginTransaction()) {
-                    using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=|DataDirectory|App_Data\EMR_DB.mdf; Integrated Security=True")) {
 
-                        if ((sqlQuery as ISqlCommandParameters) != null) {
-                            (sqlQuery as ISqlCommandParameters).AddParameters(command);
-                        }
-
-                        try {
-                            connection.Open();
-                            sqlQuery.ExecuteQuery(command, sqlReader);
-                            transaction.Commit();
-                        }
-                        catch (Exception e) {
-                            Console.WriteLine($"Error Executing Database Query:\n{e}");
-                        }
+                using (SqlCommand command = new SqlCommand(sqlQuery.GetQueryString(), connection)) {
+                    if ((sqlQuery as ISqlCommandParameters) != null) {
+                        (sqlQuery as ISqlCommandParameters).AddParameters(command);
+                    }
+                    try {
+                        connection.Open();
+                        sqlQuery.ExecuteQuery(command, sqlReader);
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine($"Error Executing Database Query:\n{e}");
                     }
                 }
             }

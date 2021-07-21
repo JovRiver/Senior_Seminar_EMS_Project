@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Project_2_EMS.Models.PatientModels {
-    public class PatientAppointment {
+    public class PatientAppointment : IPatient {
         public int VisitId { get; }
         public int PatientId { get; }
         public DateTime ApptDate { get; }

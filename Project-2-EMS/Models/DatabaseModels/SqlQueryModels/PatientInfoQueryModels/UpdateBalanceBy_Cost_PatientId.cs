@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class UpdateBalanceBy_Cost_PatientId : ISqlQuery, ISqlCommandParameters, INonQuery {
+    public class UpdateBalanceBy_Cost_PatientId : INonQuery {
         private readonly int _Cost;
         private readonly int _PatientId;
 
@@ -11,17 +11,13 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _PatientId = patientId;
         }
 
-        public void AddParameters(SqlCommand command) {
+        public void ExecuteQuery(SqlConnection connection, SqlCommand command) {
+            command.Connection = connection;
+            command.CommandText = "UPDATE PatientInfo SET Balance = Balance + @cost FROM PatientInfo WHERE PatientID = @patientId;";
             command.Parameters.Add("@cost", SqlDbType.Decimal).Value = _Cost;
             command.Parameters.Add("@patientId", SqlDbType.Int).Value = _PatientId;
-        }
 
-        public void ExecuteQuery(SqlCommand command, ISqlReader sqlReader) {
-            sqlReader.Read(command);
-        }
-
-        public string GetQueryString() {
-            return "UPDATE PatientInfo SET Balance = Balance + @cost FROM PatientInfo WHERE PatientID = @patientId;";
+            _ = command.ExecuteNonQuery();
         }
     }
 }

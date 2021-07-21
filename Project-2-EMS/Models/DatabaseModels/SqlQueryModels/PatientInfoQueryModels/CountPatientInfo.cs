@@ -1,13 +1,14 @@
 ﻿using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class CountPatientInfo : ISqlQuery, ICountQuery {
-        public void ExecuteQuery(SqlCommand command, ISqlReader sqlReader) {
-            sqlReader.Read(command);
-        }
+    public class CountPatientInfo : ICountQuery {
+        public int ExecuteQuery(SqlConnection connection, SqlCommand command) {
+            command.Connection = connection;
+            command.CommandText = "SELECT COUNT(*) FROM PatientInfo;";
 
-        public string GetQueryString() {
-            return "SELECT COUNT(*) FROM PatientInfo;";
+            SqlCountReader reader = new SqlCountReader();
+
+            return reader.Read(command);
         }
     }
 }

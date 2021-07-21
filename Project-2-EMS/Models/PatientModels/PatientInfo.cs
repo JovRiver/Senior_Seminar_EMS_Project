@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Project_2_EMS.Models.PatientModels {
-    public class PatientInfo {
+    public class PatientInfo : IPatient {
         public int PatientId { get; }
         public string FirstName { get; }
         public string LastName { get; }

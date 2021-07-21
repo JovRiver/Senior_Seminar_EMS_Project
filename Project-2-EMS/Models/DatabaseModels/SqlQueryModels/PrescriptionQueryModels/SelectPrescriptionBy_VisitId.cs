@@ -1,24 +1,27 @@
-﻿using System.Data;
+﻿using Project_2_EMS.Models.PatientModels;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectPrescriptionBy_VisitId : ISqlQuery, ISqlCommandParameters, IPrescriptionListQuery {
+    public class SelectPrescriptionBy_VisitId : IListQuery {
         private readonly int _VisitId;
 
         public SelectPrescriptionBy_VisitId(int visitId) {
             _VisitId = visitId;
         }
 
-        public void AddParameters(SqlCommand command) {
+        public List<T> ExecuteQuery<T>(SqlConnection connection, SqlCommand command) {
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM Prescription WHERE VisitID = @visitId;";
             command.Parameters.Add("@visitId", SqlDbType.Int).Value = _VisitId;
-        }
 
-        public void ExecuteQuery(SqlCommand command, ISqlReader sqlReader) {
-            sqlReader.Read(command);
-        }
+            List<PatientPrescription> list = new List<PatientPrescription>();
+            SqlListReader reader = new SqlListReader();
 
-        public string GetQueryString() {
-            return "SELECT * FROM Prescription WHERE VisitID = @visitId;";
+            reader.Read(command, list);
+
+            return list as List<T>;
         }
     }
 }

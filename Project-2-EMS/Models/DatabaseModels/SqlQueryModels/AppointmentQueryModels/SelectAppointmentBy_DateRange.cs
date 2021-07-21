@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Project_2_EMS.Models.PatientModels;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_DateRange : ISqlQuery, ISqlCommandParameters, IAppointmentListQuery {
+    public class SelectAppointmentBy_DateRange : IListQuery {
         private readonly DateTime _StartDate;
         private readonly DateTime _EndDate;
 
@@ -12,17 +14,18 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _EndDate = endDate;
         }
 
-        public void AddParameters(SqlCommand command) {
+        public List<T> ExecuteQuery<T>(SqlConnection connection, SqlCommand command) {
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM Appointments WHERE ApptDate BETWEEN @apptStartDate AND @apptEndDate;";
             command.Parameters.Add("@ApptStartDate", SqlDbType.DateTime).Value = _StartDate;
             command.Parameters.Add("@ApptEndDate", SqlDbType.DateTime).Value = _EndDate;
-        }
 
-        public void ExecuteQuery(SqlCommand command, ISqlReader sqlReader) {
-            sqlReader.Read(command);
-        }
+            List<PatientAppointment> list = new List<PatientAppointment>();
+            SqlListReader reader = new SqlListReader();
 
-        public string GetQueryString() {
-            return "SELECT * FROM Appointments WHERE ApptDate BETWEEN @apptStartDate AND @apptEndDate;";
+            reader.Read(command, list);
+
+            return list as List<T>;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_DateRange : IListQuery {
+    public class SelectAppointmentBy_DateRange<T> : IListQuery<T> where T : PatientAppointment {
         private readonly DateTime _StartDate;
         private readonly DateTime _EndDate;
 
@@ -14,7 +14,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _EndDate = endDate;
         }
 
-        public List<T> ExecuteQuery<T>(SqlConnection connection, SqlCommand command) {
+        public List<T> ExecuteQuery(SqlConnection connection, SqlCommand command) {
             command.Connection = connection;
             command.CommandText = "SELECT * FROM Appointments WHERE ApptDate BETWEEN @apptStartDate AND @apptEndDate;";
             command.Parameters.Add("@ApptStartDate", SqlDbType.DateTime).Value = _StartDate;

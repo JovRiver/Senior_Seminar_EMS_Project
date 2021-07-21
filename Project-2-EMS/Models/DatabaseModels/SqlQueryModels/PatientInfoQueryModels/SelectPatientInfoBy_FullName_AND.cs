@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectPatientInfoBy_FullName_AND : IListQuery {
+    public class SelectPatientInfoBy_FullName_AND<T> : IListQuery<T> where T : PatientInfo {
         private readonly string _FirstName;
         private readonly string _LastName;
 
@@ -12,7 +12,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _LastName = lastName;
         }
 
-        public List<T> ExecuteQuery<T>(SqlConnection connection, SqlCommand command) {
+        public List<T> ExecuteQuery(SqlConnection connection, SqlCommand command) {
             command.Connection = connection;
             command.CommandText = "SELECT * FROM PatientInfo WHERE FirstName LIKE @firstName AND LastName LIKE @lastName;";
             command.Parameters.Add("@firstName", SqlDbType.Text).Value = _FirstName;

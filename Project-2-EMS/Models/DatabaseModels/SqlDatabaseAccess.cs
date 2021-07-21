@@ -22,12 +22,12 @@ namespace Project_2_EMS.Models.DatabaseModels {
             }
         }
 
-        public List<T> ExecuteListQuery<T>(IListQuery query) where T: IPatient {
+        public List<T> ExecuteListQuery<T>(IListQuery<T> query) where T: IPatient {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = new SqlCommand()) {
                         connection.Open();
-                        return query.ExecuteQuery<T>(connection, command);
+                        return query.ExecuteQuery(connection, command);
                     }
                 }
             }
@@ -40,7 +40,6 @@ namespace Project_2_EMS.Models.DatabaseModels {
 
         public void ExecuteNonQuery(INonQuery query) {
             try {
-                List<PatientInfo> list = ExecuteListQuery<PatientInfo>(new SelectAppointmentBy_VisitId(1));
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = new SqlCommand()) {
                         connection.Open();

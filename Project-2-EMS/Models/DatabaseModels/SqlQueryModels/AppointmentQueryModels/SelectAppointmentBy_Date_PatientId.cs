@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_Date_PatientId : IListQuery {
+    public class SelectAppointmentBy_Date_PatientId<T> : IListQuery<T> where T : PatientAppointment {
         private readonly DateTime _AppointmentDate;
         private readonly int _PatientId;
 
@@ -14,7 +14,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _PatientId = patientId;
         }
 
-        public List<T> ExecuteQuery<T>(SqlConnection connection, SqlCommand command) {
+        public List<T> ExecuteQuery(SqlConnection connection, SqlCommand command) {
             command.Connection = connection;
             command.CommandText = "SELECT * FROM Appointments WHERE ApptDate = @apptDate AND PatientID = @patientId;";
             command.Parameters.Add("@apptDate", SqlDbType.DateTime).Value = _AppointmentDate;

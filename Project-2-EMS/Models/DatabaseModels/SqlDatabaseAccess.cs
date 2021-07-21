@@ -32,13 +32,15 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine($"Error Executing Appointment Query:\n{e}");
-                return new List<T>();
+                Console.WriteLine($"Error Executing List Query:\nMake sure the argument you are passing to the ExecuteListQuery " +
+                    $"returns the list type you are expecting.");
+                throw e;
             }
         }
 
         public void ExecuteNonQuery(INonQuery query) {
             try {
+                List<PatientInfo> list = ExecuteListQuery<PatientInfo>(new SelectAppointmentBy_VisitId(1));
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = new SqlCommand()) {
                         connection.Open();

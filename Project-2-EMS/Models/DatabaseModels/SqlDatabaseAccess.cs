@@ -32,23 +32,24 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine($"Error Executing List Query:\nMake sure the argument you are passing to the ExecuteListQuery " +
-                    $"returns the list type you are expecting.");
-                throw e;
+                Console.WriteLine($"Error Executing List Query:\n{e}");
+                return new List<T>();
             }
         }
 
-        public void ExecuteNonQuery(INonQuery query) {
+        public bool ExecuteNonQuery(INonQuery query) {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = new SqlCommand()) {
                         connection.Open();
                         query.ExecuteQuery(connection, command);
+                        return true;
                     }
                 }
             }
             catch (Exception e) {
                 Console.WriteLine($"Error Executing NonQuery:\n{e}");
+                return false;
             }
         }
     }

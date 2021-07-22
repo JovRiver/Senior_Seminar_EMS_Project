@@ -4,24 +4,20 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlListReader {
-        public List<T> Read<T>(SqlCommand command, List<T> list) {
+    public class SqlListReader<T> {
+        private readonly List<T> TableList = new List<T>();
+
+        public List<T> Read(SqlCommand command) {
             using (SqlDataReader reader = command.ExecuteReader()) {
-                if ((list as List<PatientAppointment>) != null) {
-                    ReadAppointment(reader, list);
-                }
-                else if ((list as List<PatientInfo>) != null) {
-                    ReadPatientInfo(reader, list);
-                }
-                else if ((list as List<PatientPrescription>) != null) {
-                    ReadPrescription(reader, list);
-                }
+                if ((TableList as List<PatientAppointment>) != null) { ReadAppointment(reader); }
+                else if ((TableList as List<PatientInfo>) != null) { ReadPatientInfo(reader); }
+                else if ((TableList as List<PatientPrescription>) != null) { ReadPrescription(reader); }
             }
 
-            return list;
+            return TableList;
         }
 
-        private void ReadAppointment<T>(SqlDataReader reader, List<T> list) {
+        private void ReadAppointment(SqlDataReader reader) {
             while (reader.Read()) {
                 int visitId = reader.GetInt32(0);
                 int patientId = reader.GetInt32(1);
@@ -33,11 +29,11 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 string doctorNote = reader.GetString(7);
 
                 PatientAppointment appointment = new PatientAppointment(visitId, patientId, apptDate, apptTime, cost, receptNote, nurseNote, doctorNote);
-                (list as List<PatientAppointment>).Add(appointment);
+                (TableList as List<PatientAppointment>).Add(appointment);
             }
         }
 
-        private void ReadPatientInfo<T>(SqlDataReader reader, List<T> list) {
+        private void ReadPatientInfo(SqlDataReader reader) {
             while (reader.Read()) {
                 int patientId = reader.GetInt32(0);
                 string lastName = reader.GetString(1);
@@ -46,11 +42,11 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 decimal balance = reader.GetDecimal(4);
 
                 PatientInfo patient = new PatientInfo(patientId, firstName, lastName, address, balance);
-                (list as List<PatientInfo>).Add(patient);
+                (TableList as List<PatientInfo>).Add(patient);
             }
         }
 
-        private void ReadPrescription<T>(SqlDataReader reader, List<T> list) {
+        private void ReadPrescription(SqlDataReader reader) {
             while (reader.Read()) {
                 int prescriptionId = reader.GetInt32(0);
                 int patientId = reader.GetInt32(1);
@@ -60,7 +56,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 byte refills = reader.GetByte(5);
 
                 PatientPrescription prescription = new PatientPrescription(prescriptionId, patientId, visitId, prescriptionName, prescriptionNotes, refills);
-                (list as List<PatientPrescription>).Add(prescription);
+                (TableList as List<PatientPrescription>).Add(prescription);
             }
         }
     }

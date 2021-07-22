@@ -10,10 +10,12 @@ namespace Project_2_EMS.Models.DatabaseModels {
             _Prescription = prescription;
         }
 
-        public void ExecuteQuery(SqlConnection connection, SqlCommand command) {
-            command.Connection = connection;
-            command.CommandText = "INSERT INTO Prescription ([PrescriptionID], [PatientID], [VisitID], [PrescriptionName], [PrescriptionNotes], [Refills]) " +
-                                  "VALUES (@prescriptionId,@patientId,@visitId,@prescriptionName,@prescriptionNotes,@refills);";
+        public SqlCommand SetupSqlCommand(SqlConnection connection) {
+            SqlCommand command = new SqlCommand() {
+                Connection = connection,
+                CommandText = "INSERT INTO Prescription ([PrescriptionID], [PatientID], [VisitID], [PrescriptionName], [PrescriptionNotes], [Refills]) " +
+                              "VALUES (@prescriptionId,@patientId,@visitId,@prescriptionName,@prescriptionNotes,@refills);"
+            };
             command.Parameters.Add("@prescriptionID", SqlDbType.Int).Value = _Prescription.PrescriptionID;
             command.Parameters.Add("@patientID", SqlDbType.Int).Value = _Prescription.PatientID;
             command.Parameters.Add("@visitID", SqlDbType.Int).Value = _Prescription.VisitID;
@@ -21,7 +23,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
             command.Parameters.Add("@prescriptionNotes", SqlDbType.Text).Value = _Prescription.PrescriptionNotes;
             command.Parameters.Add("@refills", SqlDbType.TinyInt).Value = _Prescription.Refills;
 
-            _ = command.ExecuteNonQuery();
+            return command;
         }
     }
 }

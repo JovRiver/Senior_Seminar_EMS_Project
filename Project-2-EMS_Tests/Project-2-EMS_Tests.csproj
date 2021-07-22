@@ -71,6 +71,9 @@
     <Compile Include="Models_Tests\ComparerModels_Tests\PatientInfoComparer_Test.cs" />
     <Compile Include="Models_Tests\ComparerModels_Tests\PrescriptionComparer_Test.cs" />
     <Compile Include="Models_Tests\DatabaseModels_Tests\SqlDatabaseAccess_Test.cs" />
+    <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\AppointmentQueryModels_Tests\SelectAppointmentBy_VisitId_Test.cs" />
+    <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\PatientInfoQueryModels_Tests\SelectPatientInfoBy_PatientId_Test.cs" />
+    <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\PrescriptionQueryModels_Tests\SelectPrescriptionBy_VisitId_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

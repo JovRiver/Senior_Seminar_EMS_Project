@@ -127,6 +127,7 @@
     <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\SelectPrescriptionBy_PatientId.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\SelectPrescriptionBy_VisitId.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\UpdateBalanceBy_Cost_PatientId.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\ISqlQuery.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlCountReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlListReader.cs" />
     <Compile Include="Models\PatientModels\IPatient.cs" />

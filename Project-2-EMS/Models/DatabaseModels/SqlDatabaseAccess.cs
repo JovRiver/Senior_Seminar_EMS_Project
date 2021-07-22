@@ -10,9 +10,10 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public int ExecuteCountQuery(ICountQuery query) {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = new SqlCommand()) {
+                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
                         connection.Open();
-                        return query.ExecuteQuery(connection, command);
+                        SqlCountReader reader = new SqlCountReader();
+                        return reader.Read(command);
                     }
                 }
             }
@@ -25,9 +26,10 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public List<T> ExecuteListQuery<T>(IListQuery<T> query) where T: IPatient {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = new SqlCommand()) {
+                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
                         connection.Open();
-                        return query.ExecuteQuery(connection, command);
+                        SqlListReader<T> reader = new SqlListReader<T>();
+                        return reader.Read(command);
                     }
                 }
             }
@@ -40,9 +42,9 @@ namespace Project_2_EMS.Models.DatabaseModels {
         public bool ExecuteNonQuery(INonQuery query) {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = new SqlCommand()) {
+                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
                         connection.Open();
-                        query.ExecuteQuery(connection, command);
+                        _ = command.ExecuteNonQuery();
                         return true;
                     }
                 }

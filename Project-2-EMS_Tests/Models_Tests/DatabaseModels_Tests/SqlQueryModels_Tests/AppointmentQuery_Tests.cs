@@ -66,12 +66,14 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
         public void SelectAppointmentBy_Date_PatientId_Test() {
             Mock<ISqlDatabaseAccess> mock_IDbAccess = new Mock<ISqlDatabaseAccess>();
             List<PatientAppointment> expected = new List<PatientAppointment> {
-                new PatientAppointment(5, 1, DateTime.MinValue, TimeSpan.MinValue, decimal.Zero, "", "", ""),
-                new PatientAppointment(4, 1, DateTime.MinValue, TimeSpan.MinValue, decimal.Zero, "", "", "")
+                new PatientAppointment(5, 1, DateTime.Parse("1/1/2001"), TimeSpan.MinValue, decimal.Zero, "", "", "")
             };
             List<PatientAppointment> actual = new List<PatientAppointment>();
 
-            SelectAppointmentBy_Date_PatientId<PatientAppointment> query = new SelectAppointmentBy_Date_PatientId<PatientAppointment>(DateTime.MinValue, 1);
+            DateTime date = DateTime.Parse("1/1/2001");
+            int patientId = 1;
+
+            SelectAppointmentBy_Date_PatientId<PatientAppointment> query = new SelectAppointmentBy_Date_PatientId<PatientAppointment>(date, patientId);
             mock_IDbAccess.Setup(l => l.ExecuteListQuery(query)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteListQuery(query);
@@ -79,15 +81,13 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
 
             // Verify the appointment dates match for both appointments
-            Assert.IsTrue(expected[0].ApptDate == actual[0].ApptDate);
-            Assert.IsTrue(expected[0].ApptDate == actual[1].ApptDate);
+            Assert.IsTrue(actual[0].ApptDate == date);
 
             // Verify the appointment patient id's match for both
-            Assert.IsTrue(expected[0].PatientId == actual[0].PatientId);
-            Assert.IsTrue(expected[0].PatientId == actual[1].PatientId);
+            Assert.IsTrue(actual[0].PatientId == patientId);
 
-            // Verify that there are only 2 appointments, like we expect
-            Assert.IsTrue(actual.Count == 2);
+            // Verify that there is only 1 appointment, like we expect
+            Assert.IsTrue(actual.Count == 1);
         }
 
         [TestMethod]
@@ -109,15 +109,11 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
 
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
 
-            // Verify that we received the expected appointments
-            Assert.IsTrue(expected[0].ApptDate ==  actual[0].ApptDate);
-            Assert.IsTrue(expected[1].ApptDate == actual[1].ApptDate);
-
             // Verify that the dates of the two appointments fall between the start and end dates
             Assert.IsTrue(start <= actual[0].ApptDate);
-            Assert.IsTrue(end >= actual[0].ApptDate);
+            Assert.IsTrue(actual[0].ApptDate >= end);
             Assert.IsTrue(start <= actual[1].ApptDate);
-            Assert.IsTrue(end >= actual[1].ApptDate);
+            Assert.IsTrue(actual[1].ApptDate >= end);
 
             // Verify that there are only 2 appointments, like we expect
             Assert.IsTrue(actual.Count == 2);
@@ -132,7 +128,9 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             };
             List<PatientAppointment> actual = new List<PatientAppointment>();
 
-            SelectAppointmentBy_PatientId<PatientAppointment> query = new SelectAppointmentBy_PatientId<PatientAppointment>(1);
+            int patientId = 1;
+
+            SelectAppointmentBy_PatientId<PatientAppointment> query = new SelectAppointmentBy_PatientId<PatientAppointment>(patientId);
             mock_IDbAccess.Setup(l => l.ExecuteListQuery(query)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteListQuery(query);
@@ -140,8 +138,8 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
 
             // Verify that we received the expected appointments by PatientId
-            Assert.IsTrue(expected[0].PatientId == actual[0].PatientId);
-            Assert.IsTrue(expected[0].PatientId == actual[1].PatientId);
+            Assert.IsTrue(actual[0].PatientId == patientId);
+            Assert.IsTrue(actual[1].PatientId == patientId);
 
             // Verify that there are only 2 appointments, like we expect
             Assert.IsTrue(actual.Count == 2);
@@ -155,7 +153,9 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             };
             List<PatientAppointment> actual = new List<PatientAppointment>();
 
-            SelectAppointmentBy_VisitId<PatientAppointment> query = new SelectAppointmentBy_VisitId<PatientAppointment>(4);
+            int visitId = 4;
+
+            SelectAppointmentBy_VisitId<PatientAppointment> query = new SelectAppointmentBy_VisitId<PatientAppointment>(visitId);
             mock_IDbAccess.Setup(l => l.ExecuteListQuery(query)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteListQuery(query);
@@ -163,7 +163,7 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
 
             // Verify that we received the expected appointment by VisitId
-            Assert.IsTrue(expected[0].VisitId == actual[0].VisitId);
+            Assert.IsTrue(actual[0].VisitId == visitId);
 
             // Verify that there is only 1 appointment, like we expect
             Assert.IsTrue(actual.Count == 1);

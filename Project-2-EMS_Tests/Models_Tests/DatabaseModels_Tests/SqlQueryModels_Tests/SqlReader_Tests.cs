@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_Tests {
     /// 
-    /// Test the appointment query objects in the PrescriptionQueryModels
+    /// Test the SqlListReader and SqlCountReader classes
     /// 
     [TestClass]
-    public class PrescriptionQuery_Tests {
+    public class SqlReader_Tests {
         [TestMethod]
         public void TestMethod1() {
             

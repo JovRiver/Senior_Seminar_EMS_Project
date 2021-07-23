@@ -74,6 +74,7 @@
     <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\AppointmentQuery_Tests.cs" />
     <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\PatientInfoQuery_Tests.cs" />
     <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\PrescriptionQuery_Tests.cs" />
+    <Compile Include="Models_Tests\DatabaseModels_Tests\SqlQueryModels_Tests\SqlReader_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

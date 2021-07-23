@@ -39,12 +39,12 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             int expected = 5;
             int actual = 0;
             
-            CountAppointment query = new CountAppointment();
-            mock_IDbAccess.Setup(c => c.ExecuteCountQuery(query)).Returns(expected);
+            Mock<ICountQuery> query = new Mock<ICountQuery>();
+            mock_IDbAccess.Setup(c => c.ExecuteCountQuery(query.Object)).Returns(expected);
 
-            actual = mock_IDbAccess.Object.ExecuteCountQuery(query);
+            actual = mock_IDbAccess.Object.ExecuteCountQuery(query.Object);
 
-            mock_IDbAccess.Verify(c => c.ExecuteCountQuery(query), Times.Once);
+            mock_IDbAccess.Verify(c => c.ExecuteCountQuery(query.Object), Times.Once);
             Assert.IsTrue(expected == actual);
         }
 
@@ -57,12 +57,12 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             };
             List<PatientAppointment> actual = new List<PatientAppointment>();
 
-            SelectAppointmentBy_PatientId<PatientAppointment> query = new SelectAppointmentBy_PatientId<PatientAppointment>(1);
-            mock_IDbAccess.Setup(l => l.ExecuteListQuery(query)).Returns(expected);
+            Mock<IListQuery<PatientAppointment>> query = new Mock<IListQuery<PatientAppointment>>();
+            mock_IDbAccess.Setup(l => l.ExecuteListQuery(query.Object)).Returns(expected);
 
-            actual = mock_IDbAccess.Object.ExecuteListQuery(query);
+            actual = mock_IDbAccess.Object.ExecuteListQuery(query.Object);
 
-            mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
+            mock_IDbAccess.Verify(l => l.ExecuteListQuery(query.Object), Times.Once);
             Assert.IsTrue(expected[0].VisitId == actual[0].VisitId);
             Assert.IsFalse(expected[1].VisitId == actual[0].VisitId);
             Assert.IsTrue(actual.Count == 2);
@@ -74,12 +74,12 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             bool expected = true;
             bool actual = false;
 
-            UpdateBalanceBy_Cost_PatientId query = new UpdateBalanceBy_Cost_PatientId(50, 1);
-            mock_IDbAccess.Setup(n => n.ExecuteNonQuery(query)).Returns(expected);
+            Mock<INonQuery> query = new Mock<INonQuery>();
+            mock_IDbAccess.Setup(n => n.ExecuteNonQuery(query.Object)).Returns(expected);
 
-            actual = mock_IDbAccess.Object.ExecuteNonQuery(query);
+            actual = mock_IDbAccess.Object.ExecuteNonQuery(query.Object);
 
-            mock_IDbAccess.Verify(n => n.ExecuteNonQuery(query), Times.Once);
+            mock_IDbAccess.Verify(n => n.ExecuteNonQuery(query.Object), Times.Once);
             Assert.IsTrue(expected && actual);
         }
     }

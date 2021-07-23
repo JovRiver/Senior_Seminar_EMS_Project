@@ -2,19 +2,19 @@
 
 namespace Project_2_EMS.Models.PatientModels {
     public class PatientPrescription : IPatient {
-        public int PrescriptionID { get; }
-        public int PatientID { get; }
-        public int VisitID { get; }
+        public int PrescriptionId { get; }
+        public int PatientId { get; }
+        public int VisitId { get; }
         public String PrescriptionName { get; }
         public String PrescriptionNotes { get; }
         public int Refills { get; }
 
         public PatientPrescription() { }
 
-        public PatientPrescription(int prescriptionID, int patientID, int visitID, String prescriptionName, String presciprtionNotes, int refills) {
-            PrescriptionID = prescriptionID;
-            PatientID = patientID;
-            VisitID = visitID;
+        public PatientPrescription(int prescriptionId, int patientId, int visitId, String prescriptionName, String presciprtionNotes, int refills) {
+            PrescriptionId = prescriptionId;
+            PatientId = patientId;
+            VisitId = visitId;
             PrescriptionName = prescriptionName;
             PrescriptionNotes = presciprtionNotes;
             Refills = refills;

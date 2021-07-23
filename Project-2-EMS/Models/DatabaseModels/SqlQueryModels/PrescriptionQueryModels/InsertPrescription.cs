@@ -16,9 +16,9 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 CommandText = "INSERT INTO Prescription ([PrescriptionID], [PatientID], [VisitID], [PrescriptionName], [PrescriptionNotes], [Refills]) " +
                               "VALUES (@prescriptionId,@patientId,@visitId,@prescriptionName,@prescriptionNotes,@refills);"
             };
-            command.Parameters.Add("@prescriptionID", SqlDbType.Int).Value = _Prescription.PrescriptionID;
-            command.Parameters.Add("@patientID", SqlDbType.Int).Value = _Prescription.PatientID;
-            command.Parameters.Add("@visitID", SqlDbType.Int).Value = _Prescription.VisitID;
+            command.Parameters.Add("@prescriptionID", SqlDbType.Int).Value = _Prescription.PrescriptionId;
+            command.Parameters.Add("@patientID", SqlDbType.Int).Value = _Prescription.PatientId;
+            command.Parameters.Add("@visitID", SqlDbType.Int).Value = _Prescription.VisitId;
             command.Parameters.Add("@prescriptionName", SqlDbType.Text).Value = _Prescription.PrescriptionName;
             command.Parameters.Add("@prescriptionNotes", SqlDbType.Text).Value = _Prescription.PrescriptionNotes;
             command.Parameters.Add("@refills", SqlDbType.TinyInt).Value = _Prescription.Refills;

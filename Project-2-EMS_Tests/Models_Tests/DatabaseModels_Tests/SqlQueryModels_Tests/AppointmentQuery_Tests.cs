@@ -110,10 +110,8 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_T
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query), Times.Once);
 
             // Verify that the dates of the two appointments fall between the start and end dates
-            Assert.IsTrue(start <= actual[0].ApptDate);
-            Assert.IsTrue(actual[0].ApptDate >= end);
-            Assert.IsTrue(start <= actual[1].ApptDate);
-            Assert.IsTrue(actual[1].ApptDate >= end);
+            Assert.IsTrue(start <= actual[0].ApptDate && actual[0].ApptDate <= end);
+            Assert.IsTrue(start <= actual[1].ApptDate && actual[1].ApptDate <= end);
 
             // Verify that there are only 2 appointments, like we expect
             Assert.IsTrue(actual.Count == 2);

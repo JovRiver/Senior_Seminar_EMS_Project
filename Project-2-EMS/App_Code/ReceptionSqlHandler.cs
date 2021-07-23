@@ -8,15 +8,12 @@ namespace Project_2_EMS {
     class ReceptionSqlHandler {
       
         public string PatientNameExactQuerier() {
-            string query = "SELECT * " +
-                           "FROM PatientInfo " +
-                           "WHERE FirstName LIKE @firstName AND LastName LIKE   @lastName;";
+            string query = "SELECT * FROM PatientInfo WHERE FirstName LIKE @firstName AND LastName LIKE @lastName;";
             return query;
         }
 
         public string NumberOfAppointmentsQuerier() {
-            String query = "SELECT COUNT(*) " +
-                           "FROM Appointments;";
+            String query = "SELECT COUNT(*) FROM Appointments;";
 
             return query;
         }
@@ -36,26 +33,20 @@ namespace Project_2_EMS {
         }
 
         public string UpdatePatientBalance() {
-            String query = "UPDATE PatientInfo " +
-                           "SET Balance = Balance + @cost " +
-                           "FROM PatientInfo " +
-                           "WHERE PatientID = @patientId";
+            String query = "UPDATE PatientInfo SET Balance = Balance + @cost FROM PatientInfo WHERE PatientID = @patientId";
 
             return query;
         }
 
+        // NOT NEEDED, USE ABOVE TO UPDATE PATIENT BALANCE
         public string UpdatePatientBalanceNewAppointment() {
-            String query = "UPDATE PatientInfo " +
-                           "SET Balance = Balance + @cost " +
-                           "FROM PatientInfo p, Appointments a " +
-                           "WHERE p.PatientID = a.PatientID AND a.VisitID = @visitId";
+            String query = "UPDATE PatientInfo SET Balance = Balance + @cost FROM PatientInfo p, Appointments a WHERE p.PatientID = a.PatientID AND a.VisitID = @visitId";
 
             return query;
         }
 
         public string DeleteAppointmentFromDb() {
-            String query = "DELETE FROM Appointments " +
-                         "WHERE VisitID = @visitId";
+            String query = "DELETE FROM Appointments WHERE VisitID = @visitId";
 
             return query;
         }

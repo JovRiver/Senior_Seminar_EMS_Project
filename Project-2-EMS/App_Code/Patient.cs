@@ -15,15 +15,15 @@ namespace Project_2_EMS {
       Address = address;
       Balance = balance;
     }
-    /*
-    public Patient(int patientId, string firstName, string lastName, string address = null) : this(patientId, firstName, lastName, address, Decimal.Zero) {
-      
-        PatientId = patientId;
-        FirstName = firstName;
-        LastName = lastName;
-        Address = address;
-        
+        /*
+public Patient(int patientId, string firstName, string lastName, string address = null) : this(patientId, firstName, lastName, address, Decimal.Zero) {
+
+   PatientId = patientId;
+   FirstName = firstName;
+   LastName = lastName;
+   Address = address;
+
+}
+*/
     }
-    */
-  }
 }

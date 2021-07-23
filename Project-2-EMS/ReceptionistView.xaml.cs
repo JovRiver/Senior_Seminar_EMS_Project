@@ -26,8 +26,8 @@ namespace Project_2_EMS {
         private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
 
         // Create lists to hold appointments and patients for global use
-        private List<PatientAppointment> appointments = new List<PatientAppointment>();
-        private List<Patient> patients = new List<Patient>();
+        private readonly List<PatientAppointment> appointments = new List<PatientAppointment>();
+        private readonly List<Patient> patients = new List<Patient>();
 
         // Create global variables to hold the current week date and the previous week date
         // These are used when interacting with the calendar
@@ -313,7 +313,7 @@ namespace Project_2_EMS {
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex) {
-                    MessageBox.Show("Error when attempting to update patient balance.");
+                    MessageBox.Show($"Error when attempting to update patient balance.\nError: {ex}");
                 }
             }
         }
@@ -617,15 +617,16 @@ namespace Project_2_EMS {
         }
 
         private Boolean IsValidPayment() {
-            bool isValid = true;
+            //bool isValid = true;
             /** 
              *  Payment is only valid if the text contains only digits and decimals
              *  (I realize more needs to be done to ensure a valid input but I needed to spend
              *  more time on the rest of the project)
              */
-            _ = !Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$") ? isValid = false : true;
+            //_ = !Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$") ? isValid = false : true;
 
-            return isValid;
+            return Regex.IsMatch(BillingPayAmount.Text, @"^[0-9.]+$");
+            //return isValid;
         }
 
         private void ConfirmPayment(int patientId, Decimal amountPaid) {

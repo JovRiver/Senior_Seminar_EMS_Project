@@ -63,11 +63,10 @@
         <ColumnDefinition Width="90*" />
         <ColumnDefinition Width="5*" />
       </Grid.ColumnDefinitions>
-      
-      <Label Content="Patient Login" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="36" FontWeight="Bold"/>
 
-      
-      <TextBox Grid.Row="3" Grid.Column="1" Name="Patient_TbUsername" Text="Username" Width="300" Height="40"
+            <Label Content="Patient Login" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="36" FontWeight="Bold"/>
+
+            <TextBox Grid.Row="3" Grid.Column="1" Name="Patient_TbUsername" Text="Username" Width="300" Height="40"
                VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="10"/>
 
       <PasswordBox Grid.Row="4" Grid.Column="1" Width="300" Height="40" VerticalAlignment="Center"

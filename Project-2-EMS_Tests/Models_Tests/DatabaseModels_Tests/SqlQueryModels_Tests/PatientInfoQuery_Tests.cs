@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_Tests.PrescriptionQueryModels_Tests {
+namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests.SqlQueryModels_Tests {
     /// 
-    /// 
+    /// Test the appointment query objects in the PatientInfoQueryModels
     /// 
     [TestClass]
-    public class SelectPrescriptionBy_VisitId_Test {
+    public class PatientInfoQuery_Tests {
         [TestMethod]
         public void TestMethod1() {
             //

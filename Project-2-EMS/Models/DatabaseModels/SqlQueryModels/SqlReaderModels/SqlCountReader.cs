@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlCountReader {
+    public class SqlCountReader : ISqlCountReader {
         public int Read(SqlCommand command) {
             int count = -1;
             using (SqlDataReader dataReader = command.ExecuteReader()) {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SqlListReader<T> {
+    public class SqlListReader<T> : ISqlListReader<T> {
         private readonly List<T> TableList = new List<T>();
 
         public List<T> Read(SqlCommand command) {

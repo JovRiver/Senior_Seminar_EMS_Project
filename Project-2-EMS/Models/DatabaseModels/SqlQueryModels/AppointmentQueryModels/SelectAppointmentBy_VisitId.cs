@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectAppointmentBy_VisitId<T> : IListQuery<T> where T: PatientAppointment {
+    public class SelectAppointmentBy_VisitId<T> : IListQuery<T> where T : PatientAppointment {
         private readonly int _VisitId;
 
         public SelectAppointmentBy_VisitId(int visitId) {

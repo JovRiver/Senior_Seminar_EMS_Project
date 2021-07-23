@@ -12,7 +12,7 @@ namespace Project_2_EMS.Models.DatabaseModels {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = query.SetupSqlCommand(connection)) {
                         connection.Open();
-                        SqlCountReader reader = new SqlCountReader();
+                        ISqlCountReader reader = new SqlCountReader();
                         return reader.Read(command);
                     }
                 }
@@ -23,12 +23,12 @@ namespace Project_2_EMS.Models.DatabaseModels {
             }
         }
 
-        public List<T> ExecuteListQuery<T>(IListQuery<T> query) where T: IPatient {
+        public List<T> ExecuteListQuery<T>(IListQuery<T> query) where T : IPatient {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = query.SetupSqlCommand(connection)) {
                         connection.Open();
-                        SqlListReader<T> reader = new SqlListReader<T>();
+                        ISqlListReader<T> reader = new SqlListReader<T>();
                         return reader.Read(command);
                     }
                 }

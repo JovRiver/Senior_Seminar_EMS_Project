@@ -34,7 +34,6 @@ I will update this as I make progress.
 
 [Unit Testing]
  - Created Project-2-EMS_Tests project and added to solution
-
  - Created tests for the SqlDatabaseAccess class using Moq
  - Created tests for the database query classes
  - Created tests for the reader classes

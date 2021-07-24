@@ -41,7 +41,7 @@ I will update this as I make progress.
  - Created tests for the comparer classes
 
 [Folder Structure]
- -- Main Project Files
+ *Main Project Files
  - Moved SqlDatabaseAccess class/interface to   Project-2-EMS\Models\DatabaseModels
  - Moved database query classes to              Project-2-EMS\Models\DatabaseModels\SqlQueryModels
  - Further split the query classes              Project-2-EMS\Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels
@@ -53,7 +53,7 @@ I will update this as I make progress.
  - Moved the StaffMember class to               Project-2-EMS\Models\StaffModels
  - Moved comparer classes to                    Project-2-EMS\Models\ComparerModels
  
- --Test Project Files
+ *Test Project Files
  - Moved SqlDatabaseAccess_Test to              Project-2-EMS_Tests\Models\DatabaseModels_Tests
  - Moved database query class tests to          Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests
  - Moved reader class tests to                  Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests

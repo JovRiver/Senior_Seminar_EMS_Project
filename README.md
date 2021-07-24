@@ -22,7 +22,7 @@ Note: I created a legacy branch to hold the original build for comparison.
 
 I will update this as I make progress.
 
-# Changelog 1.1 7/23/2021:
+## Changelog 1.1 7/23/2021:
 [New Classes]
  - Created a Models folder to hold project models
  - Created SqlDatabaseAccess class to handle database access, including an interface mainly used for testing at this time
@@ -41,20 +41,33 @@ I will update this as I make progress.
  - Created tests for the comparer classes
 
 [Folder Structure]
+
  *Main Project Files
- - Moved SqlDatabaseAccess class/interface to   Project-2-EMS\Models\DatabaseModels
- - Moved database query classes to              Project-2-EMS\Models\DatabaseModels\SqlQueryModels
- - Further split the query classes              Project-2-EMS\Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels
-                                                Project-2-EMS\Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels
-                                                Project-2-EMS\Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels
- - Moved query class interfaces to              Project-2-EMS\Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels
- - Moved reader classes/interfaces to           Project-2-EMS\Models\DatabaseModels\SqlQueryModels\SqlReaderModels
- - Moved Patient classes to                     Project-2-EMS\Models\PatientModels
- - Moved the StaffMember class to               Project-2-EMS\Models\StaffModels
- - Moved comparer classes to                    Project-2-EMS\Models\ComparerModels
+ - Moved SqlDatabaseAccess class/interface to   
+   - Project-2-EMS\Models\DatabaseModels
+ - Moved database query classes to              
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels
+ - Further split the query classes              
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels
+ - Moved query class interfaces to              
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels
+ - Moved reader classes/interfaces to           
+   - Project-2-EMS\Models\DatabaseModels\SqlQueryModels\SqlReaderModels
+ - Moved Patient classes to                     
+   - Project-2-EMS\Models\PatientModels
+ - Moved the StaffMember class to               
+   - Project-2-EMS\Models\StaffModels
+ - Moved comparer classes to                    
+   - Project-2-EMS\Models\ComparerModels
  
  *Test Project Files
- - Moved SqlDatabaseAccess_Test to              Project-2-EMS_Tests\Models\DatabaseModels_Tests
- - Moved database query class tests to          Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests
- - Moved reader class tests to                  Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests
- - Moved comparer class tests to                Project-2-EMS_Tests\Models\ComparerModels_Tests
+ - Moved SqlDatabaseAccess_Test to              
+   - Project-2-EMS_Tests\Models\DatabaseModels_Tests
+ - Moved database query class tests to          
+   - Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests
+ - Moved reader class tests to                  
+   - Project-2-EMS_Tests\Models\DatabaseModels_Tests\SqlQueryModels_Tests
+ - Moved comparer class tests to                
+   - Project-2-EMS_Tests\Models\ComparerModels_Tests

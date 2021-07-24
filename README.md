@@ -22,7 +22,7 @@ Note: I created a legacy branch to hold the original build for comparison.
 
 I will update this as I make progress.
 
-## Changelog 1.1 7/23/2021:
+## Changelog 1.1:
 [New Classes]
  - Created a Models folder to hold project models
  - Created SqlDatabaseAccess class to handle database access, including an interface mainly used for testing at this time

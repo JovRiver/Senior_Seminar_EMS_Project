@@ -8,50 +8,30 @@ namespace Project_2_EMS.Models.DatabaseModels {
         private const string _ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=|DataDirectory|App_Data\EMR_DB.mdf; Integrated Security=True";
 
         public int ExecuteCountQuery(ICountQuery query) {
-            try {
-                using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
-                        connection.Open();
-                        ISqlCountReader reader = new SqlCountReader();
-                        return reader.Read(command);
-                    }
-                }
-            }
-            catch (Exception e) {
-                Console.WriteLine($"Error Executing Count Query:\n{e}");
-                return -1;
-            }
+            int count = Execute<int>(query, new SqlCountReader());
+            return count > 0 ? count : -1;
         }
 
-        public List<T> ExecuteListQuery<T>(IListQuery<T> query) where T : IPatient {
-            try {
-                using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
-                        connection.Open();
-                        ISqlListReader<T> reader = new SqlListReader<T>();
-                        return reader.Read(command);
-                    }
-                }
-            }
-            catch (Exception e) {
-                Console.WriteLine($"Error Executing List Query:\n{e}");
-                return new List<T>();
-            }
+        public List<T> ExecuteListQuery<T>(ISelectQuery<T> query) where T : IPatient {
+            return Execute<List<T>>(query, new SqlListReader()) ?? new List<T>();
         }
 
         public bool ExecuteNonQuery(INonQuery query) {
+            return Execute<bool>(query, new SqlNonQueryReader());
+        }
+
+        private T Execute<T>(ISqlQuery query, ISqlReader reader) {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
-                    using (SqlCommand command = query.SetupSqlCommand(connection)) {
+                    using (SqlCommand command = query.ConnectSqlCommand(connection)) {
                         connection.Open();
-                        _ = command.ExecuteNonQuery();
-                        return true;
+                        return (T)Convert.ChangeType(reader.Read<T>(command), typeof(T));
                     }
                 }
             }
             catch (Exception e) {
                 Console.WriteLine($"Error Executing NonQuery:\n{e}");
-                return false;
+                return default;
             }
         }
     }

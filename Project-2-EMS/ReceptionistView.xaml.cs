@@ -150,21 +150,21 @@ namespace Project_2_EMS {
         }
 
         private void GetPatientAppointments() {
-            SelectAppointmentBy_DateRange <PatientAppointment> query = new SelectAppointmentBy_DateRange<PatientAppointment>(weekDate, weekDate.AddDays(6));
-            Appointments = db_Access.ExecuteListQuery(query);
+            AppointmentQuery<PatientAppointment> query = new AppointmentQuery<PatientAppointment>();
+            Appointments = db_Access.ExecuteListQuery(query.SelectBy_DateRange(weekDate, weekDate.AddDays(6)));
         }
 
         private void GetPatientById(int patId) {
-            SelectPatientInfoBy_PatientId<PatientInfo> query = new SelectPatientInfoBy_PatientId<PatientInfo>(patId);
-            PatientList.Add(db_Access.ExecuteListQuery(query)[0]);
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            PatientList.Add(db_Access.ExecuteListQuery(query.SelectBy_PatientId(patId))[0]);
         }
 
         private PatientInfo GetPatientByName() {
             string firstName = BillingFirstNameTb.Text;
             string lastName = BillingLastNameTb.Text;
 
-            SelectPatientInfoBy_FullName_AND<PatientInfo> query = new SelectPatientInfoBy_FullName_AND<PatientInfo>(firstName, lastName);
-            return db_Access.ExecuteListQuery(query)[0];
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            return db_Access.ExecuteListQuery(query.SelectBy_FullName_AND(firstName, lastName))[0];
         }
 
         private void PopulateSignInView() {
@@ -198,8 +198,8 @@ namespace Project_2_EMS {
         }
 
         private void UpdateDbPatientBalance(int patientId, decimal cost) {
-            UpdateBalanceBy_Cost_PatientId query = new UpdateBalanceBy_Cost_PatientId(cost, patientId);
-            _ = db_Access.ExecuteNonQuery(query);
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            _ = db_Access.ExecuteNonQuery(query.UpdateBy_Cost_PatientId(cost, patientId));
         }
 
         private void ClearSigninView() {

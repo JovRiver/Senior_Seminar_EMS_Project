@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public interface ISqlQuery {
+    public interface ISqlQueryCommand {
         SqlCommand ConnectSqlCommand(SqlConnection connection);
     }
 }

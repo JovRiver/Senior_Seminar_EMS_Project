@@ -7,24 +7,24 @@ namespace Project_2_EMS.Models.DatabaseModels {
     public class AppointmentQuery<T> where T : PatientAppointment {
         private SqlCommand Command;
 
-        public ICountQuery Count() {
+        public ICountCommand Count() {
             Command = new SqlCommand() {
                 CommandText = "SELECT COUNT(*) FROM Appointments;"
             };
 
-            return new CountQuery(Command);
+            return new CountCommand(Command);
         }
 
-        public INonQuery DeleteBy_VisitId(int visitId) {
+        public INonQueryCommand DeleteBy_VisitId(int visitId) {
             Command = new SqlCommand() {
                 CommandText = "DELETE FROM Appointments WHERE VisitID = @visitId;"
             };
             Command.Parameters.Add("@visitId", SqlDbType.Int).Value = visitId;
 
-            return new NonQuery(Command);
+            return new NonQueryCommand(Command);
         }
 
-        public INonQuery Insert(PatientAppointment appointment) {
+        public INonQueryCommand Insert(PatientAppointment appointment) {
             Command = new SqlCommand() {
                 CommandText = "INSERT INTO Appointments ([VisitID], [PatientID], [ApptDate], [ApptTime], [Cost], [ReceptNote], [NurseNote], [DoctorNote]) " +
                               "VALUES (@visitId,@patientId,@apptDate,@apptTime,@cost,@receptNote,@nurseNote,@doctorNote);"
@@ -38,45 +38,45 @@ namespace Project_2_EMS.Models.DatabaseModels {
             Command.Parameters.Add("@nurseNote", SqlDbType.Text).Value = appointment.NurseNote;
             Command.Parameters.Add("@doctorNote", SqlDbType.Text).Value = appointment.DoctorNote;
 
-            return new NonQuery(Command);
+            return new NonQueryCommand(Command);
         }
 
-        public ISelectQuery<T> SelectBy_Date_PatientId(DateTime date, int patientId) {
+        public ISelectCommand<T> SelectBy_Date_PatientId(DateTime date, int patientId) {
             Command = new SqlCommand() {
                 CommandText = "SELECT * FROM Appointments WHERE ApptDate = @apptDate AND PatientID = @patientId;"
             };
             Command.Parameters.Add("@apptDate", SqlDbType.DateTime).Value = date;
             Command.Parameters.Add("@patientID", SqlDbType.Int).Value = patientId;
 
-            return new SelectQuery<T>(Command);
+            return new SelectCommand<T>(Command);
         }
 
-        public ISelectQuery<T> SelectBy_DateRange(DateTime startDate, DateTime endDate) {
+        public ISelectCommand<T> SelectBy_DateRange(DateTime startDate, DateTime endDate) {
             Command = new SqlCommand() {
                 CommandText = "SELECT * FROM Appointments WHERE ApptDate BETWEEN @apptStartDate AND @apptEndDate;"
             };
             Command.Parameters.Add("@ApptStartDate", SqlDbType.DateTime).Value = startDate;
             Command.Parameters.Add("@ApptEndDate", SqlDbType.DateTime).Value = endDate;
 
-            return new SelectQuery<T>(Command);
+            return new SelectCommand<T>(Command);
         }
 
-        public ISelectQuery<T> SelectBy_PatientId(int patientId) {
+        public ISelectCommand<T> SelectBy_PatientId(int patientId) {
             Command = new SqlCommand() {
                 CommandText = "SELECT * FROM Appointments WHERE PatientID = @patientId;"
             };
             Command.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
 
-            return new SelectQuery<T>(Command);
+            return new SelectCommand<T>(Command);
         }
 
-        public ISelectQuery<T> SelectBy_VisitId(int visitId) {
+        public ISelectCommand<T> SelectBy_VisitId(int visitId) {
             Command = new SqlCommand() {
                 CommandText = "SELECT * FROM Appointments WHERE VisitID = @visitId;"
             };
             Command.Parameters.Add("@visitId", SqlDbType.Int).Value = visitId;
 
-            return new SelectQuery<T>(Command);
+            return new SelectCommand<T>(Command);
         }
     }
 }

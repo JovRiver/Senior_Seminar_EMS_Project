@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class NonQuery : INonQuery {
+    public class NonQueryCommand : INonQueryCommand {
         private readonly SqlCommand Command;
 
-        public NonQuery(SqlCommand command) {
+        public NonQueryCommand(SqlCommand command) {
             Command = command;
         }
         

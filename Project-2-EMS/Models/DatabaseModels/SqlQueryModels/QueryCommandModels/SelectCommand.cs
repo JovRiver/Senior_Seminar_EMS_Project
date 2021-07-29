@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class SelectQuery<T> : ISelectQuery<T> {
+    public class SelectCommand<T> : ISelectCommand<T> {
         private readonly SqlCommand Command;
 
-        public SelectQuery(SqlCommand command) {
+        public SelectCommand(SqlCommand command) {
             Command = command;
         }
 

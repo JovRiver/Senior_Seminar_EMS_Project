@@ -7,20 +7,20 @@ namespace Project_2_EMS.Models.DatabaseModels {
     public class SqlDatabaseAccess : ISqlDatabaseAccess {
         private const string _ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=|DataDirectory|App_Data\EMR_DB.mdf; Integrated Security=True";
 
-        public int ExecuteCountQuery(ICountQuery query) {
+        public int ExecuteCountQuery(ICountCommand query) {
             int count = Execute<int>(query, new SqlCountReader());
             return count > 0 ? count : -1;
         }
 
-        public List<T> ExecuteListQuery<T>(ISelectQuery<T> query) where T : IPatient {
+        public List<T> ExecuteListQuery<T>(ISelectCommand<T> query) where T : IPatient {
             return Execute<List<T>>(query, new SqlListReader()) ?? new List<T>();
         }
 
-        public bool ExecuteNonQuery(INonQuery query) {
+        public bool ExecuteNonQuery(INonQueryCommand query) {
             return Execute<bool>(query, new SqlNonQueryReader());
         }
 
-        private T Execute<T>(ISqlQuery query, ISqlReader reader) {
+        private T Execute<T>(ISqlQueryCommand query, ISqlReader reader) {
             try {
                 using (SqlConnection connection = new SqlConnection(_ConnectionString)) {
                     using (SqlCommand command = query.ConnectSqlCommand(connection)) {

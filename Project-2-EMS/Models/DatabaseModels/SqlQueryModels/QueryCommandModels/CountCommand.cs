@@ -2,10 +2,10 @@
 using System.Data.SqlClient;
 
 namespace Project_2_EMS.Models.DatabaseModels {
-    public class CountQuery : ICountQuery {
+    public class CountCommand : ICountCommand {
         private readonly SqlCommand Command;
 
-        public CountQuery(SqlCommand command) {
+        public CountCommand(SqlCommand command) {
             Command = command;
         }
 

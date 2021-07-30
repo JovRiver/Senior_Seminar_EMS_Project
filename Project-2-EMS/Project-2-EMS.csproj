@@ -106,9 +106,9 @@
     <Compile Include="Models\ComparerModels\PatientInfoComparer.cs" />
     <Compile Include="Models\ComparerModels\PrescriptionComparer.cs" />
     <Compile Include="Models\DatabaseModels\ISqlDatabaseAccess.cs" />
-    <Compile Include="Models\DatabaseModels\QueryCommandModels\AppointmentQuery.cs" />
-    <Compile Include="Models\DatabaseModels\QueryCommandModels\PatientInfoQuery.cs" />
-    <Compile Include="Models\DatabaseModels\QueryCommandModels\PrescriptionQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQuery.cs" />
     <Compile Include="Models\DatabaseModels\SqlDatabaseAccess.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\ICountCommand.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\INonQueryCommand.cs" />

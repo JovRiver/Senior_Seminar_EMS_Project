@@ -10,7 +10,6 @@ namespace Project_2_EMS.Models.DatabaseModels {
         
         public SqlCommand ConnectSqlCommand(SqlConnection connection) {
             Command.Connection = connection;
-
             return Command;
         }
     }

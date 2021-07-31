@@ -1,11 +1,11 @@
-﻿using Project_2_EMS.App_Code;
+﻿using Project_2_EMS.Models.DatabaseModels;
+using Project_2_EMS.Models.PatientModels;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -22,12 +22,11 @@ namespace Project_2_EMS {
         private Window newApptWindow;
 
         // Create global database sql handler and connection manager
-        private readonly SharedSqlHandler sharedSqlHandler = new SharedSqlHandler();
-        private readonly DatabaseConnectionManager dbConnMan = new DatabaseConnectionManager();
+        private readonly SqlDatabaseAccess db_Access = new SqlDatabaseAccess();
 
         // Create lists to hold appointments and patients for global use
-        private readonly List<PatientAppointment> appointments = new List<PatientAppointment>();
-        private readonly List<Patient> patients = new List<Patient>();
+        private List<PatientAppointment> Appointments = new List<PatientAppointment>();
+        private List<PatientInfo> PatientList = new List<PatientInfo>();
 
         // Create global variables to hold the current week date and the previous week date
         // These are used when interacting with the calendar
@@ -54,7 +53,7 @@ namespace Project_2_EMS {
         private void InitializeHeadLabels() {
             // Set the current weekdate based on the current date
             weekDate = DateTime.Now.AddDays(Convert.ToDouble(DateTime.Now.DayOfWeek.ToString("d")) * -1.0);
-            
+
             // Set the selected date on the calendar to current date
             ApptCalendar.SelectedDate = DateTime.Now.Date;
 
@@ -70,7 +69,7 @@ namespace Project_2_EMS {
             ClearAppointmentGrid();
 
             // Populate the appointment grid with appointments for this week
-            PopulateAppointmentGrid(patients, appointments);
+            PopulateAppointmentGrid();
 
             // Populate the sign-in view with patients who have an appointment today
             PopulateSignInView();
@@ -106,7 +105,7 @@ namespace Project_2_EMS {
              *  I set the button names to be the same as the view names so that I could compare
              *  the names. If the button name equals the view name, then we make that view visible,
              *  else, we make the view invisible
-             */ 
+             */
             foreach (Grid grid in ViewPanel.Children) {
                 _ = grid.Name.Contains(btn.Name) ? grid.Visibility = Visibility.Visible : grid.Visibility = Visibility.Hidden;
             }
@@ -150,119 +149,21 @@ namespace Project_2_EMS {
         }
 
         private void GetPatientAppointments() {
-            // Choose our query statement based on date range
-            string query = sharedSqlHandler.AppointmentQuerier("DateRange");
-
-            // Setup the sql connection and commands and attempt to read from the database
-            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
-                // Use parameterized queries to query the database
-                SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
-                cmd.Parameters.Add("@ApptStartDate", SqlDbType.DateTime).Value = weekDate;
-                cmd.Parameters.Add("@ApptEndDate", SqlDbType.DateTime).Value = weekDate.AddDays(6);
-           
-                try {
-                    // Use sql data reader to read from the database
-                    connection.Open();
-                    SqlDataReader dataReader = cmd.ExecuteReader();
-
-                    // Continue to loop through each part read by the data reader, grab the data,
-                    // create a new appointment object, and add it to our appointments list
-                    while (dataReader.Read()) {
-                        int visitId = dataReader.GetInt32(0);
-                        int patientId = dataReader.GetInt32(1);
-                        DateTime apptDate = dataReader.GetDateTime(2);
-                        TimeSpan apptTime = dataReader.GetTimeSpan(3);
-                        decimal cost = dataReader.GetDecimal(4);
-                        string receptNote = dataReader.GetString(5);
-                        string nurseNote = dataReader.GetString(6);
-                        string doctorNote = dataReader.GetString(7);
-
-                        PatientAppointment appointment = new PatientAppointment(visitId, patientId, apptDate, apptTime, cost, receptNote, nurseNote, doctorNote);
-                        appointments.Add(appointment);
-                    }
-                }
-                catch (Exception) {
-                    MessageBox.Show("Error reading from database.");
-                }
-            }
+            AppointmentQuery<PatientAppointment> query = new AppointmentQuery<PatientAppointment>();
+            Appointments = db_Access.ExecuteListQuery(query.SelectBy_DateRange(weekDate, weekDate.AddDays(6)));
         }
 
         private void GetPatientById(int patId) {
-            // Choose our query statement based on patient Id
-            string query = sharedSqlHandler.PatientIdQuerier();
-
-            // Setup the sql connection and commands and attempt to read from the database
-            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
-                // Use parameterized queries to query the database
-                SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
-                cmd.Parameters.Add("@PatientId", SqlDbType.Int).Value = patId;
-
-                try {
-                    // Use sql data reader to read from the database
-                    connection.Open();
-                    SqlDataReader dataReader = cmd.ExecuteReader();
-
-                    // Continue to loop through each part read by the data reader, grab the data,
-                    // create a new patient object, and add it to our patients list
-                    while (dataReader.Read()) {
-                        int patientId = dataReader.GetInt32(0);
-                        string lastName = dataReader.GetString(1);
-                        string firstName = dataReader.GetString(2);
-                        string address = dataReader.GetString(3);
-                        decimal balance = dataReader.GetDecimal(4);
-
-                        Patient patient = new Patient(patientId, firstName, lastName, address, balance);
-                        patients.Add(patient);
-                    }
-                }
-                catch (Exception) {
-                    MessageBox.Show("Error reading from database.");
-                }
-            }
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            PatientList.Add(db_Access.ExecuteListQuery(query.SelectBy_PatientId(patId))[0]);
         }
 
-        private Patient GetPatientByName() {
-            Patient patient = null;
+        private PatientInfo GetPatientByName() {
+            string firstName = BillingFirstNameTb.Text;
+            string lastName = BillingLastNameTb.Text;
 
-            // Grab the first and last name from the billing text boxes
-            string findFirstName = BillingFirstNameTb.Text;
-            string findLastName = BillingLastNameTb.Text;
-
-            // Choose our query statement based on patient name
-            ReceptionSqlHandler rcsql = new ReceptionSqlHandler();
-            string query = rcsql.PatientNameExactQuerier();
-
-            // Setup the sql connection and commands and attempt to read from the database
-            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
-                // Use parameterized queries to query the database
-                SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
-                cmd.Parameters.Add("@firstName", SqlDbType.Text).Value = findFirstName.Trim(' ');
-                cmd.Parameters.Add("@lastName", SqlDbType.Text).Value = findLastName.Trim(' ');
-
-                try {
-                    // Use sql data reader to read from the database
-                    connection.Open();
-                    SqlDataReader dataReader = cmd.ExecuteReader();
-
-                    // Continue to loop through each part read by the data reader, grab the data,
-                    // and create a new patient object
-                    while (dataReader.Read()) {
-                        int patientId = dataReader.GetInt32(0);
-                        string lastName = dataReader.GetString(1);
-                        string firstName = dataReader.GetString(2);
-                        string address = dataReader.GetString(3);
-                        Decimal balance = dataReader.GetDecimal(4);
-
-                        patient = new Patient(patientId, firstName, lastName, address, balance);
-                    }
-
-                    dataReader.Close();
-                }
-                catch (Exception) {
-                    MessageBox.Show("Error reading from database.");
-                }
-            }
-            return patient;
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            return db_Access.ExecuteListQuery(query.SelectBy_FullName_AND(firstName, lastName))[0];
         }
 
         private void PopulateSignInView() {
@@ -270,21 +171,21 @@ namespace Project_2_EMS {
 
             // Use a row index counter to drop to the next row after each addition to the sign-in view
             int rowIndex = 0;
-            foreach (PatientAppointment pa in appointments) {
+            foreach (PatientAppointment appt in Appointments) {
                 // Check if the current appointment is today
-                if (pa.ApptDate == DateTime.Now.Date) {
-                    foreach (Patient p in patients) {
+                if (appt.ApptDate == DateTime.Now.Date) {
+                    foreach (PatientInfo patient in PatientList) {
                         // Check for each patient who's appointment is today by matching their Id's
-                        if (pa.PatientId == p.PatientId) {
+                        if (appt.PatientId == patient.PatientId) {
                             // Grab each label with at the current row index from the sign-in view
                             Label visitId = GetChild(SignInVisitId, rowIndex, 0) as Label;
                             Label lastName = GetChild(SignInLastName, rowIndex, 0) as Label;
                             Label firstName = GetChild(SignInFirstName, rowIndex, 0) as Label;
 
                             // Set the sign-in information
-                            visitId.Content = "[ " + pa.VisitId + " ]";
-                            lastName.Content = p.LastName;
-                            firstName.Content = p.FirstName;
+                            visitId.Content = "[ " + appt.VisitId + " ]";
+                            lastName.Content = patient.LastName;
+                            firstName.Content = patient.FirstName;
 
                             // Increment the row index to be the next line in the sign-in view
                             rowIndex += 1;
@@ -296,26 +197,8 @@ namespace Project_2_EMS {
         }
 
         private void UpdateDbPatientBalance(int patientId, decimal cost) {
-            // Choose our query statement to update the patient balance
-            ReceptionSqlHandler rcsql = new ReceptionSqlHandler();
-            string query = rcsql.UpdatePatientBalance();
-
-            // Setup the sql connection and commands and attempt to read from the database
-            using (SqlConnection connection = dbConnMan.ConnectToDatabase()) {
-                // Use parameterized queries to query the database
-                SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
-                cmd.Parameters.Add("@cost", SqlDbType.Decimal).Value = cost;
-                cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patientId;
-
-                try {
-                    // Execute the command as a nonquery
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex) {
-                    MessageBox.Show($"Error when attempting to update patient balance.\nError: {ex}");
-                }
-            }
+            PatientInfoQuery<PatientInfo> query = new PatientInfoQuery<PatientInfo>();
+            _ = db_Access.ExecuteNonQuery(query.UpdateBy_Cost_PatientId(cost, patientId));
         }
 
         private void ClearSigninView() {
@@ -325,25 +208,25 @@ namespace Project_2_EMS {
             foreach (Label label in SignInFirstName.Children) { label.Content = String.Empty; }
         }
 
-        private void PopulateAppointmentGrid(List<Patient> patients, List<PatientAppointment> appointments) {
+        private void PopulateAppointmentGrid() {
             // Get all of the appointments for the current week
             // This populates the appointments list
             GetPatientAppointments();
 
             // Get all of the patients who have an appointment this week by their Id's
             // This populates the patients list
-            foreach (PatientAppointment pa in appointments) {
-                GetPatientById(pa.PatientId);
+            foreach (PatientAppointment appt in Appointments) {
+                GetPatientById(appt.PatientId);
             }
 
-            foreach (PatientAppointment appt in appointments) {
+            foreach (PatientAppointment appt in Appointments) {
                 // Initialize appt time and set a day variable to be the digit number of the day
                 // (sunday = 0, monday = 1, etc...)
                 string apptTime = String.Empty;
                 double day = Convert.ToDouble(appt.ApptDate.DayOfWeek.ToString("d"));
 
                 // Compare the current appointment time to a timespan time of 12:00:00 (PM)
-                int diff = TimeSpan.Compare(appt.ApptTime, new TimeSpan(12,0,0));
+                int diff = TimeSpan.Compare(appt.ApptTime, new TimeSpan(12, 0, 0));
 
                 // Set the apptTime to a 12 hour system and set it as either AM or PM depending on the diff
                 _ = diff > 0 ? apptTime = string.Format("{0:h\\:mm} PM", appt.ApptTime.Subtract(TimeSpan.FromHours(12))) : null;
@@ -360,15 +243,15 @@ namespace Project_2_EMS {
                         Label apptLabel = GetChild(AppointmentGrids, Grid.GetRow(child), (int)day - 1) as Label;
 
                         // Grab the current appt index to be able to get the patient at the same index
-                        int index = appointments.IndexOf(appt);
+                        int index = Appointments.IndexOf(appt);
 
                         // Grab the patient first name and last name and appointment visit id
-                        string firstName = patients.ElementAt(index).FirstName;
-                        string lastInitial = patients.ElementAt(index).LastName;
+                        string firstName = PatientList.ElementAt(index).FirstName;
+                        string lastInitial = PatientList.ElementAt(index).LastName;
                         string visitId = appt.VisitId.ToString();
 
                         // Set the calendar grid child content with the information from above and set the backgroudn to dark green
-                        apptLabel.Content = String.Format("{0} {1}.\nVisit Id: {2}", firstName, lastInitial.Substring(0,1), visitId);
+                        apptLabel.Content = String.Format("{0} {1}.\nVisit Id: {2}", firstName, lastInitial.Substring(0, 1), visitId);
                         apptLabel.Background = Brushes.DarkGreen;
                     }
                 }
@@ -377,8 +260,8 @@ namespace Project_2_EMS {
 
         private void ClearAppointmentGrid() {
             // Clear patient and appointments lists to prepare for new patients and appointments
-            appointments.Clear();
-            patients.Clear();
+            Appointments.Clear();
+            PatientList.Clear();
 
             // Return each calendar grid cell to its original color
             foreach (Label child in AppointmentGrids.Children) {
@@ -492,17 +375,17 @@ namespace Project_2_EMS {
                 // Get the visitId from the srcLabel content
                 int visitId = Convert.ToInt32(string.Join("", srcLabel.Content.ToString().ToCharArray().Where(Char.IsDigit)));
 
-                foreach (PatientAppointment pa in appointments) {
+                foreach (PatientAppointment appt in Appointments) {
                     // Grab the index of the patient who's visitId matches the visitId in the appointments list
-                    if (pa.VisitId == visitId) {
-                        patientIndex = appointments.IndexOf(pa);
+                    if (appt.VisitId == visitId) {
+                        patientIndex = Appointments.IndexOf(appt);
                         break;
                     }
                 }
 
                 // Grab both the patient and their appointment
-                Patient patient = patients.ElementAt(patientIndex);
-                PatientAppointment appointment = appointments.ElementAt(patientIndex);
+                PatientInfo patient = PatientList.ElementAt(patientIndex);
+                PatientAppointment appointment = Appointments.ElementAt(patientIndex);
 
                 string firstName = patient.FirstName;
                 string lastName = patient.LastName;
@@ -541,7 +424,7 @@ namespace Project_2_EMS {
 
         private void UpdateBillingInformation() {
             // Grab the patient with the supplied name
-            Patient patient = GetPatientByName();
+            PatientInfo patient = GetPatientByName();
 
             // If the patient exists, populate their billing information
             // else, clear the billing information
@@ -594,7 +477,7 @@ namespace Project_2_EMS {
             if (IsValidPayment()) {
                 // Grab the amount the patient wishes to pay to two decimal places ({0:N2})
                 string stringPayAmount = string.Format("{0:N2}", Convert.ToDecimal(BillingPayAmount.Text)).Trim(' ');
-                
+
                 // Convert the amount to be paid into a decimal value
                 decimal payAmount = Convert.ToDecimal(stringPayAmount);
 

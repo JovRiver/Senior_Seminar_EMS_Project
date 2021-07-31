@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project_2_EMS {
     class ReceptionSqlHandler {
-      
+
         public string PatientNameExactQuerier() {
             string query = "SELECT * FROM PatientInfo WHERE FirstName LIKE @firstName AND LastName LIKE @lastName;";
             return query;

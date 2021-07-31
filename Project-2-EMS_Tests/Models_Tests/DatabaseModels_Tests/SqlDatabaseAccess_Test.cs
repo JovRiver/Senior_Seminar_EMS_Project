@@ -4,12 +4,15 @@ using Project_2_EMS.Models.DatabaseModels;
 using Project_2_EMS.Models.PatientModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
-    /// 
-    /// Test the SqlDatabaseAccess class which handles querying the database
-    /// 
+    
+    /// <summary>
+    /// Test that SqlDatabaseAccess performs as expected
+    /// </summary>
+
     [TestClass]
     public class SqlDatabaseAccess_Test {
         [TestMethod]
@@ -20,10 +23,10 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
 
             try {
                 connection.Open();
-                connectionOpenSuccess = connection.State == System.Data.ConnectionState.Open;
+                connectionOpenSuccess = connection.State == ConnectionState.Open;
 
                 connection.Close();
-                connectionCloseSuccess = connection.State == System.Data.ConnectionState.Closed;
+                connectionCloseSuccess = connection.State == ConnectionState.Closed;
             }
             catch (Exception e) {
                 Assert.Fail(e.Message);
@@ -38,8 +41,8 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             Mock<ISqlDatabaseAccess> mock_IDbAccess = new Mock<ISqlDatabaseAccess>();
             int expected = 5;
             int actual = 0;
-            
-            Mock<ICountQuery> query = new Mock<ICountQuery>();
+
+            Mock<ICountCommand> query = new Mock<ICountCommand>();
             mock_IDbAccess.Setup(c => c.ExecuteCountQuery(query.Object)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteCountQuery(query.Object);
@@ -57,7 +60,7 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             };
             List<PatientAppointment> actual = new List<PatientAppointment>();
 
-            Mock<IListQuery<PatientAppointment>> query = new Mock<IListQuery<PatientAppointment>>();
+            Mock<ISelectCommand<PatientAppointment>> query = new Mock<ISelectCommand<PatientAppointment>>();
             mock_IDbAccess.Setup(l => l.ExecuteListQuery(query.Object)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteListQuery(query.Object);
@@ -65,7 +68,6 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             mock_IDbAccess.Verify(l => l.ExecuteListQuery(query.Object), Times.Once);
             Assert.IsTrue(expected[0].VisitId == actual[0].VisitId);
             Assert.IsFalse(expected[1].VisitId == actual[0].VisitId);
-            Assert.IsTrue(actual.Count == 2);
         }
 
         [TestMethod]
@@ -74,7 +76,7 @@ namespace Project_2_EMS_Tests.Models_Tests.DatabaseModels_Tests {
             bool expected = true;
             bool actual = false;
 
-            Mock<INonQuery> query = new Mock<INonQuery>();
+            Mock<INonQueryCommand> query = new Mock<INonQueryCommand>();
             mock_IDbAccess.Setup(n => n.ExecuteNonQuery(query.Object)).Returns(expected);
 
             actual = mock_IDbAccess.Object.ExecuteNonQuery(query.Object);

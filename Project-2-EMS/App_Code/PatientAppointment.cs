@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Project_2_EMS.App_Code
-{
-    class PatientAppointment
-    {
+namespace Project_2_EMS.App_Code {
+    class PatientAppointment {
         public int VisitId { get; }
         public int PatientId { get; }
         public DateTime ApptDate { get; }
@@ -17,8 +11,7 @@ namespace Project_2_EMS.App_Code
         public string NurseNote { get; }
         public string DoctorNote { get; }
 
-        public PatientAppointment(int visitId, int patientId, DateTime apptDate, TimeSpan apptTime, decimal cost, string receptNote, string nurseNote, string doctorNote)
-        {
+        public PatientAppointment(int visitId, int patientId, DateTime apptDate, TimeSpan apptTime, decimal cost, string receptNote, string nurseNote, string doctorNote) {
             VisitId = visitId;
             PatientId = patientId;
             ApptDate = apptDate;
@@ -28,8 +21,7 @@ namespace Project_2_EMS.App_Code
             NurseNote = nurseNote;
             DoctorNote = doctorNote;
         }
-        public override string ToString()
-        {
+        public override string ToString() {
             return "Date: " + ApptDate +
                    "\n Cost: $" + Cost +
                    "\n Receptionist Notes: " + ReceptNote +

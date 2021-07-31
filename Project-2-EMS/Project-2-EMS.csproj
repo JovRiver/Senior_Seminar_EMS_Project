@@ -99,6 +99,10 @@
     <Compile Include="App_Code\StaffMember.cs" />
     <Compile Include="App_Code\NurseSqlHandler.cs" />
     <Compile Include="App_Code\Patient.cs" />
+    <Compile Include="Commands\ViewChangedCommand.cs" />
+    <Compile Include="Controls\ViewControls\ActiveViewControls.cs" />
+    <Compile Include="Controls\ViewControls\ReceptionViewControl.cs" />
+    <Compile Include="Controls\ViewControls\BaseViewControls.cs" />
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
@@ -106,32 +110,21 @@
     <Compile Include="Models\ComparerModels\PatientInfoComparer.cs" />
     <Compile Include="Models\ComparerModels\PrescriptionComparer.cs" />
     <Compile Include="Models\DatabaseModels\ISqlDatabaseAccess.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQuery.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQuery.cs" />
     <Compile Include="Models\DatabaseModels\SqlDatabaseAccess.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\CountAppointment.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\ICountQuery.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\IListQuery.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\INonQuery.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\CountPatientInfo.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\CountPrescription.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\DeleteAppointmentBy_VisitId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\InsertAppointment.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\InsertPatientInfo.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\InsertPrescription.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\SelectAppointmentBy_DateRange.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\SelectAppointmentBy_Date_PatientId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\SelectAppointmentBy_PatientId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\AppointmentQueryModels\SelectAppointmentBy_VisitId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\SelectPatientInfoBy_FullName_AND.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\SelectPatientInfoBy_FullName_OR.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\SelectPatientInfoBy_PatientId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\SelectPrescriptionBy_PatientId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PrescriptionQueryModels\SelectPrescriptionBy_VisitId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\PatientInfoQueryModels\UpdateBalanceBy_Cost_PatientId.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlQueryInterfaceModels\ISqlQuery.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\ISqlCountReader.cs" />
-    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\ISqlListReader.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\ICountCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\INonQueryCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\ISelectCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\ISqlQueryCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\CountCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\SelectCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\QueryCommandModels\NonQueryCommand.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\ISqlReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlCountReader.cs" />
     <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlListReader.cs" />
+    <Compile Include="Models\DatabaseModels\SqlQueryModels\SqlReaderModels\SqlNonQueryReader.cs" />
     <Compile Include="Models\PatientModels\IPatient.cs" />
     <Compile Include="Models\PatientModels\PatientInfo.cs" />
     <Compile Include="Models\PatientModels\PatientAppointment.cs" />
@@ -145,6 +138,13 @@
     </Compile>
     <Compile Include="ReceptionistView.xaml.cs">
       <DependentUpon>ReceptionistView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BaseView.cs" />
+    <Compile Include="Views\LoginViews\PatientLoginView.xaml.cs">
+      <DependentUpon>PatientLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginViews\StaffLoginView.xaml.cs">
+      <DependentUpon>StaffLoginView.xaml</DependentUpon>
     </Compile>
     <Page Include="DoctorView.xaml">
       <SubType>Designer</SubType>
@@ -175,6 +175,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReceptionistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginViews\PatientLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginViews\StaffLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,7 +246,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Views\DoctorViews\" />
     <Folder Include="Views\NurseViews\" />
     <Folder Include="Views\PatientViews\" />

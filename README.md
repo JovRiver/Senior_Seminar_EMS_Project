@@ -38,3 +38,13 @@ Note: I created a legacy branch to hold the original build for comparison.
  - Created tests for the reader classes
  - Created tests for the comparer classes
 
+## Changelog 1.2
+[Classes]
+ - Consolidated query types into their own classes determined by which table they are querying
+ - Created query command classes to constrain which queries have access to which SqlDatabaseAccess methods
+ - Created appropriate interfaces to handle constraints
+ - Reworked SqlDatabaseAccess class to make use of generics to use a single method to handle setting up the connection to the database and executing the query
+
+[Unit Testing]
+ - Reworked SqlDatabaseAccess to handle the new changes made to the base class
+ - Continuing work on testing other classes

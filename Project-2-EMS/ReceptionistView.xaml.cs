@@ -48,7 +48,7 @@ namespace Project_2_EMS {
 
             // Assign parent window and ready the onwindowclosing for when receptionistview is closed
             _parentWindow = parentWindow;
-            //Closing += OnWindowClosing;
+            Closing += OnWindowClosing;
         }
 
         private void InitializeHeadLabels() {

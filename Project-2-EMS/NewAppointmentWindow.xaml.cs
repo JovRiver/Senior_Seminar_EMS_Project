@@ -1,17 +1,16 @@
-﻿using System;
-using System.Data;
-using System.Text.RegularExpressions;
+﻿using Project_2_EMS.App_Code;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data.SqlClient;
-
-using Project_2_EMS.App_Code;
-using System.ComponentModel;
 
 namespace Project_2_EMS {
-  public partial class NewAppointmentWindow {
+    public partial class NewAppointmentWindow {
         // Hold a copy of the parent window (ReceptionistView)
         private readonly ReceptionistView parentWindow;
 
@@ -41,8 +40,7 @@ namespace Project_2_EMS {
             Closing += OnWindowClosing;
         }
 
-        public NewAppointmentWindow(ReceptionistView parent, int id, string firstName, string lastName, string receptNote, Label timeLabel, DateTime date)
-        {
+        public NewAppointmentWindow(ReceptionistView parent, int id, string firstName, string lastName, string receptNote, Label timeLabel, DateTime date) {
             InitializeComponent();
             InitializeAppointmentInfo(firstName, lastName, receptNote);
             InitializeAppointmentDateTime(timeLabel, date);
@@ -120,41 +118,40 @@ namespace Project_2_EMS {
         }
 
         private void ClearChildren(Grid grid) {
-          // Clear all of the inputs from any text boxes, combo boxes, or datagrids
-          foreach (UIElement child in grid.Children) {
-            _ = child as TextBox != null ? (child as TextBox).Text = string.Empty : null;
-            _ = child as ComboBox != null ? (child as ComboBox).Text = string.Empty : null;
+            // Clear all of the inputs from any text boxes, combo boxes, or datagrids
+            foreach (UIElement child in grid.Children) {
+                _ = child as TextBox != null ? (child as TextBox).Text = string.Empty : null;
+                _ = child as ComboBox != null ? (child as ComboBox).Text = string.Empty : null;
 
-            if (child as DataGrid != null)
-            {
-              (child as DataGrid).ItemsSource = null;
-              (child as DataGrid).Items.Refresh();
+                if (child as DataGrid != null) {
+                    (child as DataGrid).ItemsSource = null;
+                    (child as DataGrid).Items.Refresh();
+                }
             }
-          }
 
-          FirstNameInvalid.Visibility = Visibility.Hidden;
-          LastNameInvalid.Visibility = Visibility.Hidden;
-          StreetInvalid.Visibility = Visibility.Hidden;
-          CityInvalid.Visibility = Visibility.Hidden;
-          ZipInvalid.Visibility = Visibility.Hidden;
+            FirstNameInvalid.Visibility = Visibility.Hidden;
+            LastNameInvalid.Visibility = Visibility.Hidden;
+            StreetInvalid.Visibility = Visibility.Hidden;
+            CityInvalid.Visibility = Visibility.Hidden;
+            ZipInvalid.Visibility = Visibility.Hidden;
         }
 
         private void NewPatientBtn_Click(object sender, RoutedEventArgs e) {
-          InitialPage.Visibility = Visibility.Hidden;
-          NewPatientPage.Visibility = Visibility.Visible;
-          patientInfoPage = NewPatientPage;
+            InitialPage.Visibility = Visibility.Hidden;
+            NewPatientPage.Visibility = Visibility.Visible;
+            patientInfoPage = NewPatientPage;
         }
 
         private void ExistingPatientBtn_Click(object sender, RoutedEventArgs e) {
-          InitialPage.Visibility = Visibility.Hidden;
-          ExistingPatientPage.Visibility = Visibility.Visible;
-          patientInfoPage = ExistingPatientPage;
+            InitialPage.Visibility = Visibility.Hidden;
+            ExistingPatientPage.Visibility = Visibility.Visible;
+            patientInfoPage = ExistingPatientPage;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e) {
-          ClearChildren(patientInfoPage);
-          patientInfoPage.Visibility = Visibility.Hidden;
-          InitialPage.Visibility = Visibility.Visible;
+            ClearChildren(patientInfoPage);
+            patientInfoPage.Visibility = Visibility.Hidden;
+            InitialPage.Visibility = Visibility.Visible;
         }
 
         private void ContinueBtn_Click(object sender, RoutedEventArgs e) {
@@ -203,17 +200,17 @@ namespace Project_2_EMS {
                 AddressLabel.Content = address;
             }
             else {
-              DataGrid patientDataGrid = ExistingPatients_Dg;
-              Patient patient = (Patient)patientDataGrid.SelectedItem;
+                DataGrid patientDataGrid = ExistingPatients_Dg;
+                Patient patient = (Patient)patientDataGrid.SelectedItem;
 
-              FirstNameLabel.Content = patient.FirstName;
-              LastNameLabel.Content = patient.LastName;
-              AddressLabel.Content = patient.Address;
+                FirstNameLabel.Content = patient.FirstName;
+                LastNameLabel.Content = patient.LastName;
+                AddressLabel.Content = patient.Address;
             }
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e) {
-            DataGrid patientDataGrid = ExistingPatients_Dg; 
+            DataGrid patientDataGrid = ExistingPatients_Dg;
 
             // Refresh the data grid each time the search button is clicked
             patientDataGrid.ItemsSource = null;
@@ -267,7 +264,7 @@ namespace Project_2_EMS {
                     patientDataGrid.ItemsSource = patients;
                 }
                 catch (Exception) {
-                   MessageBox.Show("Error reading from database.");
+                    MessageBox.Show("Error reading from database.");
                 }
             }
         }
@@ -319,7 +316,7 @@ namespace Project_2_EMS {
             }
             else {
                 MessageBox.Show("An error occurred when trying to generate Id's");
-            }            
+            }
         }
 
         private void ConfirmNewAppointment(PatientAppointment appointment) {
@@ -338,12 +335,10 @@ namespace Project_2_EMS {
             }
         }
 
-        private void ConfirmNewPatientAndAppointment(Patient patient, PatientAppointment appointment)
-        {
+        private void ConfirmNewPatientAndAppointment(Patient patient, PatientAppointment appointment) {
             MessageBoxResult result = MessageBox.Show("Confirm new patient and appointment?", "Appointment Confirmation", MessageBoxButton.YesNo);
 
-            switch (result)
-            {
+            switch (result) {
                 case MessageBoxResult.Yes:
                     // After confirmation from the user, add the new patient and appointment to the database and update the patients balance
                     AddNewPatientToDb(patient);
@@ -364,8 +359,7 @@ namespace Project_2_EMS {
             DatabaseConnectionManager dbConn = new DatabaseConnectionManager();
 
             // Set up the sql connection
-            using (SqlConnection connection = dbConn.ConnectToDatabase())
-            {
+            using (SqlConnection connection = dbConn.ConnectToDatabase()) {
                 // Use parameterized commands to add information to the database
                 SqlCommand cmd = new SqlCommand { Connection = connection, CommandText = query };
                 cmd.Parameters.Add("@patientId", SqlDbType.Int).Value = patient.PatientId;
@@ -374,13 +368,11 @@ namespace Project_2_EMS {
                 cmd.Parameters.Add("@address", SqlDbType.Text).Value = patient.Address;
                 cmd.Parameters.Add("@balance", SqlDbType.Decimal).Value = patient.Balance;
 
-                try
-                {
+                try {
                     connection.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     MessageBox.Show($"Error when attempting to add new patient to database.\nError: {e}");
                 }
             }
@@ -439,8 +431,8 @@ namespace Project_2_EMS {
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e) {
-          NewAppointmentPage.Visibility = Visibility.Hidden;
-          patientInfoPage.Visibility = Visibility.Visible;
+            NewAppointmentPage.Visibility = Visibility.Hidden;
+            patientInfoPage.Visibility = Visibility.Visible;
         }
 
         private void CloseApptView_Click(object sender, RoutedEventArgs e) {

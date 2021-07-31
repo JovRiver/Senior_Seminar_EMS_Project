@@ -99,6 +99,10 @@
     <Compile Include="App_Code\StaffMember.cs" />
     <Compile Include="App_Code\NurseSqlHandler.cs" />
     <Compile Include="App_Code\Patient.cs" />
+    <Compile Include="Commands\ViewChangedCommand.cs" />
+    <Compile Include="Controls\ViewControls\ActiveViewControls.cs" />
+    <Compile Include="Controls\ViewControls\ReceptionViewControl.cs" />
+    <Compile Include="Controls\ViewControls\BaseViewControls.cs" />
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
@@ -135,6 +139,13 @@
     <Compile Include="ReceptionistView.xaml.cs">
       <DependentUpon>ReceptionistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BaseView.cs" />
+    <Compile Include="Views\LoginViews\PatientLoginView.xaml.cs">
+      <DependentUpon>PatientLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginViews\StaffLoginView.xaml.cs">
+      <DependentUpon>StaffLoginView.xaml</DependentUpon>
+    </Compile>
     <Page Include="DoctorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,6 +175,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReceptionistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginViews\PatientLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginViews\StaffLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,7 +246,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Views\DoctorViews\" />
     <Folder Include="Views\NurseViews\" />
     <Folder Include="Views\PatientViews\" />

@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Project_2_EMS.Models.DatabaseModels;
+using Project_2_EMS.Models.PatientModels;
+using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Project_2_EMS.Models.DatabaseModels;
-using Project_2_EMS.Models.PatientModels;
 
 namespace Project_2_EMS {
     public partial class ReceptionistView {
@@ -48,13 +47,13 @@ namespace Project_2_EMS {
 
             // Assign parent window and ready the onwindowclosing for when receptionistview is closed
             _parentWindow = parentWindow;
-            //Closing += OnWindowClosing;
+            Closing += OnWindowClosing;
         }
 
         private void InitializeHeadLabels() {
             // Set the current weekdate based on the current date
             weekDate = DateTime.Now.AddDays(Convert.ToDouble(DateTime.Now.DayOfWeek.ToString("d")) * -1.0);
-            
+
             // Set the selected date on the calendar to current date
             ApptCalendar.SelectedDate = DateTime.Now.Date;
 
@@ -106,7 +105,7 @@ namespace Project_2_EMS {
              *  I set the button names to be the same as the view names so that I could compare
              *  the names. If the button name equals the view name, then we make that view visible,
              *  else, we make the view invisible
-             */ 
+             */
             foreach (Grid grid in ViewPanel.Children) {
                 _ = grid.Name.Contains(btn.Name) ? grid.Visibility = Visibility.Visible : grid.Visibility = Visibility.Hidden;
             }
@@ -227,7 +226,7 @@ namespace Project_2_EMS {
                 double day = Convert.ToDouble(appt.ApptDate.DayOfWeek.ToString("d"));
 
                 // Compare the current appointment time to a timespan time of 12:00:00 (PM)
-                int diff = TimeSpan.Compare(appt.ApptTime, new TimeSpan(12,0,0));
+                int diff = TimeSpan.Compare(appt.ApptTime, new TimeSpan(12, 0, 0));
 
                 // Set the apptTime to a 12 hour system and set it as either AM or PM depending on the diff
                 _ = diff > 0 ? apptTime = string.Format("{0:h\\:mm} PM", appt.ApptTime.Subtract(TimeSpan.FromHours(12))) : null;
@@ -252,7 +251,7 @@ namespace Project_2_EMS {
                         string visitId = appt.VisitId.ToString();
 
                         // Set the calendar grid child content with the information from above and set the backgroudn to dark green
-                        apptLabel.Content = String.Format("{0} {1}.\nVisit Id: {2}", firstName, lastInitial.Substring(0,1), visitId);
+                        apptLabel.Content = String.Format("{0} {1}.\nVisit Id: {2}", firstName, lastInitial.Substring(0, 1), visitId);
                         apptLabel.Background = Brushes.DarkGreen;
                     }
                 }
@@ -478,7 +477,7 @@ namespace Project_2_EMS {
             if (IsValidPayment()) {
                 // Grab the amount the patient wishes to pay to two decimal places ({0:N2})
                 string stringPayAmount = string.Format("{0:N2}", Convert.ToDecimal(BillingPayAmount.Text)).Trim(' ');
-                
+
                 // Convert the amount to be paid into a decimal value
                 decimal payAmount = Convert.ToDecimal(stringPayAmount);
 

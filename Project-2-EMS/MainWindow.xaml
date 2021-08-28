@@ -8,8 +8,105 @@
 
     <!-- <Image Grid.Row="0" Height="50" Source="App_Resources/EdmondsonInternalMedicine.png"/> -->
     <Grid Name="BackgroundGrid">
+        <Grid.Background>
+            <ImageBrush ImageSource="App_Resources/Login Background.png"/>
+        </Grid.Background>
 
-          
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF64AE93" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <Border Grid.Row="3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.2">
+                        <GradientStop Color="#FF64AE93" Offset="1"/>
+                        <GradientStop Color="White"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="2" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF64AE93" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Image Height="50" Source="App_Resources/EdmondsonInternalMedicine.png" Opacity="0.6"/>
+            </Border>
+
+            <Button Content="Patient Login" Grid.Row="1" Background="#FF64AE93" Margin="0,100,0,0" Opacity="0.7" Height="75" Width="250" FontSize="36"/>
+            <Button Content="Staff Login" Grid.Row="2" Background="#FF64AE93" Margin="0,0,0,100" Opacity="0.7" Height="75" Width="250" FontSize="36"/>
+
+            <Border Grid.Row="3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.2">
+                        <GradientStop Color="#FF64AE93" Offset="1"/>
+                        <GradientStop Color="White"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="4" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF64AE93" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <Border Grid.Row="3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.2">
+                        <GradientStop Color="#FF64AE93" Offset="1"/>
+                        <GradientStop Color="White"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+        </Grid>
+
+
+        <!--    
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
             <RowDefinition Height="80*" />
@@ -80,7 +177,7 @@
 
       <Label Grid.Column="1" Grid.Row="5" Name="PatientLoginError_Label" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
     </Grid>
-    
+    -->
 
 
     </Grid>

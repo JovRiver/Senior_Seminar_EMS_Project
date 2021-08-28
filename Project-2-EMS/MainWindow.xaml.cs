@@ -70,19 +70,19 @@ namespace Project_2_EMS {
         }
 
         private void StaffLoginButton_Click(object sender, RoutedEventArgs e) {
-            String username = Staff_TbUsername.Text;
-            String password = Staff_TbPassword.Password;
-            Label errorLabel = StaffLoginError_Label;
+            //String username = Staff_TbUsername.Text;
+            //String password = Staff_TbPassword.Password;
+            //Label errorLabel = StaffLoginError_Label;
 
-            LoginHandler("StaffLogin", username, password, errorLabel);
+            //LoginHandler("StaffLogin", username, password, errorLabel);
         }
 
         private void PatientLoginButton_Click(object sender, RoutedEventArgs e) {
-            String username = Patient_TbUsername.Text;
-            String password = Patient_TbPassword.Password;
-            Label errorLabel = PatientLoginError_Label;
+            //String username = Patient_TbUsername.Text;
+            //String password = Patient_TbPassword.Password;
+            //Label errorLabel = PatientLoginError_Label;
 
-            LoginHandler("PatientLogin", username, password, errorLabel);
+            //LoginHandler("PatientLogin", username, password, errorLabel);
         }
 
         private void LoginHandler(String loginType, String username, String password, Label errorLabel) {

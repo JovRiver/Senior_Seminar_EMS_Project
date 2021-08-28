@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 
 namespace Project_2_EMS.Views {
     /// <summary>
-    /// Interaction logic for StaffLoginView.xaml
+    /// Interaction logic for ReceptionistCalendarView.xaml
     /// </summary>
-    public partial class StaffLoginView : UserControl {
-        public StaffLoginView() {
+    public partial class ReceptionistCalendarView : UserControl {
+        public ReceptionistCalendarView() {
             InitializeComponent();
         }
     }

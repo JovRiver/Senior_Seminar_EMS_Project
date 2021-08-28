@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 namespace Project_2_EMS.Commands {
     public class ViewChangedCommand : ICommand {
-        private readonly ActiveViewControls ActiveView;
+        private readonly ActiveViewControl ActiveView;
 
-        public ViewChangedCommand(ActiveViewControls activeView) {
+        public ViewChangedCommand(ActiveViewControl activeView) {
             ActiveView = activeView;
         }
 
@@ -17,7 +17,19 @@ namespace Project_2_EMS.Commands {
         }
 
         public void Execute(object parameter) {
-            ActiveView.CurrentView = new ReceptionViewControl();
+            switch (parameter.ToString()) {
+                case "PatientLogin":
+                    ActiveView.CurrentView = new PatientLoginViewControl();
+                    break;
+                case "StaffLogin":
+                    ActiveView.CurrentView = new StaffLoginViewControl();
+                    break;
+                case "ReceptionistCalendar":
+                    ActiveView.CurrentView = new ReceptionistCalendarViewControl();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

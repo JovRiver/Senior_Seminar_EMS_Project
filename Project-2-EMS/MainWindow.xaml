@@ -6,29 +6,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
 
-  <Grid Name="BackgroundGrid">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="10*" />
-      <RowDefinition Height="80*" />
-      <RowDefinition Height="10*" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="10*" />
-      <ColumnDefinition Width="40*" />
-      <ColumnDefinition Width="40*" />
-      <ColumnDefinition Width="10*" />
-    </Grid.ColumnDefinitions>
+    <!-- <Image Grid.Row="0" Height="50" Source="App_Resources/EdmondsonInternalMedicine.png"/> -->
+    <Grid Name="BackgroundGrid">
 
-    <Grid Row="1" Column="1" Name="StaffLoginGrid">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="5*" />
-        <RowDefinition Height="10*" />
-        <RowDefinition Height="30*" />
-        <RowDefinition Height="12*" />
-        <RowDefinition Height="12*" />
-        <RowDefinition Height="12*" />
-        <RowDefinition Height="5*" />
-      </Grid.RowDefinitions>
+          
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="80*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="10*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Row="1" Column="1" Name="StaffLoginGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="30*" />
+            <RowDefinition Height="12*" />
+            <RowDefinition Height="12*" />
+            <RowDefinition Height="12*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="5*" />
         <ColumnDefinition Width="90*" />
@@ -77,5 +80,8 @@
 
       <Label Grid.Column="1" Grid.Row="5" Name="PatientLoginError_Label" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
     </Grid>
-  </Grid>
+    
+
+
+    </Grid>
 </Window>

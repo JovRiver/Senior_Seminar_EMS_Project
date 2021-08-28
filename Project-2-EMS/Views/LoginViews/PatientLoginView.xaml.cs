@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Project_2_EMS.Views.LoginViews {
+namespace Project_2_EMS.Views {
     /// <summary>
     /// Interaction logic for PatientLoginView.xaml
     /// </summary>

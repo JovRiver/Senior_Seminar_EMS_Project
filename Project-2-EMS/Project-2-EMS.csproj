@@ -100,9 +100,12 @@
     <Compile Include="App_Code\NurseSqlHandler.cs" />
     <Compile Include="App_Code\Patient.cs" />
     <Compile Include="Commands\ViewChangedCommand.cs" />
-    <Compile Include="Controls\ViewControls\ActiveViewControls.cs" />
-    <Compile Include="Controls\ViewControls\ReceptionViewControl.cs" />
-    <Compile Include="Controls\ViewControls\BaseViewControls.cs" />
+    <Compile Include="Controls\ViewControls\ActiveViewControl.cs" />
+    <Compile Include="Controls\ViewControls\IView.cs" />
+    <Compile Include="Controls\ViewControls\LoginViewControls\PatientLoginViewControl.cs" />
+    <Compile Include="Controls\ViewControls\ReceptionistCalendarViewControl.cs" />
+    <Compile Include="Controls\ViewControls\BaseViewControl.cs" />
+    <Compile Include="Controls\ViewControls\LoginViewControls\StaffLoginViewControl.cs" />
     <Compile Include="DoctorView.xaml.cs">
       <DependentUpon>DoctorView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,9 @@
     <Compile Include="Views\LoginViews\StaffLoginView.xaml.cs">
       <DependentUpon>StaffLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReceptionistViews\ReceptionistCalendarView.xaml.cs">
+      <DependentUpon>ReceptionistCalendarView.xaml</DependentUpon>
+    </Compile>
     <Page Include="DoctorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -183,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginViews\StaffLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceptionistViews\ReceptionistCalendarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,6 +240,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>EMR_DB.mdf</DependentUpon>
     </Content>
+    <Resource Include="App_Resources\Login Background.png" />
     <Resource Include="App_Resources\HEAD-Top_9_Medical_Apps_for_Doctors_Hero_no_text.png" />
     <Resource Include="App_Resources\EdmondsonInternalMedicine.png" />
   </ItemGroup>
@@ -249,7 +260,6 @@
     <Folder Include="Views\DoctorViews\" />
     <Folder Include="Views\NurseViews\" />
     <Folder Include="Views\PatientViews\" />
-    <Folder Include="Views\ReceptionistViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

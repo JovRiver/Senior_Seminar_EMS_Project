@@ -14,6 +14,6 @@ This application contains a login screen and four views.
  - Doctor View: A view to allow a doctor to view patient information and add to it, including adding new prescriptions.
 
 
-Note: Made some changes to test a few updgrades out and created a legacy branch to hold the original build for comparison.
+Note: Made some changes to test a few upgrades out and created a legacy branch to hold the original build for comparison.
 
 
